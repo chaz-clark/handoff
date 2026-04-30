@@ -21,12 +21,12 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 ```
 handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
-├── SEED_CONTEXT.md       # origin doc; superseded by README.md + CONVENTION.md once authored
+├── archive/              # historical/origin docs (currently holds the seed context note; superseded by README + CONVENTION once those ship)
 ├── .gitignore            # ignores Make-AI-Agents/ and gh_issues_agent/ (local-only tooling clones)
 └── .gitattributes
 ```
 
-Planned additions (per SEED_CONTEXT.md → "What goes in this repo"):
+Planned additions (per archive/SEED_CONTEXT.md → "What goes in this repo"):
 
 ```
 handoff/
@@ -57,11 +57,10 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 
 _Last updated: 2026-04-29_
 
-- Repo is at seed stage. `SEED_CONTEXT.md` is the only design artifact; everything else (README, CONVENTION, templates, examples) is to be authored.
-- **Uncommitted but imminent**: `AGENTS.md` (this file), `SEED_CONTEXT.md`, and `.gitignore` exist in the working tree and are staged for the next commit. Only `.gitattributes` is currently tracked.
+- Repo is at seed stage. `archive/SEED_CONTEXT.md` is the only design artifact; everything else (README, CONVENTION, templates, examples) is to be authored.
 - `Make-AI-Agents/` and `gh_issues_agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
 - **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh_issues_agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit alongside `CONVENTION.md`.
-- **Next steps** (suggested order, from `SEED_CONTEXT.md` → "Next steps"):
+- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"):
   1. Author canonical `README.md` (public-facing pitch).
   2. Author `CONVENTION.md` (formal spec of file naming, lifecycle, content structure).
   3. Author `templates/` (3–4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal).
@@ -69,7 +68,7 @@ _Last updated: 2026-04-29_
   5. Add a `LICENSE` (MIT or CC0 — see open questions).
   6. First tag (v0.1) to give subtree consumers a stable point.
   7. Subtree into AgentJ first (dogfood), then propagate to canvas_toolbox, course repos, and Make-AI-Agents itself.
-- **Open design questions** (from `SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
+- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
 
 ## Domain Terms
 
