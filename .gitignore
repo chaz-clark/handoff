@@ -1,0 +1,6 @@
+# Local tooling clones — pulled in for local use, never tracked or pushed
+Make-AI-Agents/
+gh_issues_agent/
+
+# macOS
+.DS_Store
