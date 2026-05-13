@@ -22,7 +22,7 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
 ├── archive/              # historical/origin docs (currently holds the seed context note; superseded by README + CONVENTION once those ship)
-├── .gitignore            # ignores Make-AI-Agents/ and gh_issues_agent/ (local-only tooling clones)
+├── .gitignore            # ignores Make-AI-Agents/ and gh-issues-agent/ (local-only tooling clones)
 └── .gitattributes
 ```
 
@@ -44,7 +44,7 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 
 **Project-specific rules**:
 - Keep convention docs tool-agnostic. No "when using Claude Code, do X" or "in Cursor only" language in `README.md`, `CONVENTION.md`, or templates. Tool-specific guidance belongs in tool-specific config files, not in this repo.
-- `Make-AI-Agents/` and `gh_issues_agent/` are **local-only clones** of the repos that host the skills used here (`make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent`, respectively). Both are gitignored and must never be committed or pushed. To refresh: `git -C <dir> pull`. To re-clone fresh: remove the folder and run `git clone https://github.com/chaz-clark/<repo>.git` from this repo's root. (Avoid `git subtree` here — we don't want this content in tracked history; clone-and-gitignore is cleaner.)
+- `Make-AI-Agents/` and `gh-issues-agent/` are **local-only clones** of the repos that host the skills used here (`make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent`, respectively). Both are gitignored and must never be committed or pushed. To refresh: `git -C <dir> pull`. To re-clone fresh: remove the folder and run `git clone https://github.com/chaz-clark/<repo>.git` from this repo's root. (Avoid `git subtree` here — we don't want this content in tracked history; clone-and-gitignore is cleaner.)
 - Singular vs plural matters: `handoff` is the repo and the convention name; `handoffs/` (plural) is the folder name inside consumer repos. Don't conflate them in docs.
 - Subtree posture for consumers is **pull-only** — this repo is the canonical source. Consumers do not push back upstream.
 - **GitHub Issue vs handoff doc — when to use which**:
@@ -58,8 +58,8 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 _Last updated: 2026-04-29_
 
 - Repo is at seed stage. `archive/SEED_CONTEXT.md` is the only design artifact; everything else (README, CONVENTION, templates, examples) is to be authored.
-- `Make-AI-Agents/` and `gh_issues_agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
-- **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh_issues_agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit alongside `CONVENTION.md`.
+- `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
+- **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh-issues-agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit alongside `CONVENTION.md`.
 - **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"):
   1. Author canonical `README.md` (public-facing pitch).
   2. Author `CONVENTION.md` (formal spec of file naming, lifecycle, content structure).
