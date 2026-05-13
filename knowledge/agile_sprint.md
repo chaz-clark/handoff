@@ -198,6 +198,33 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 ---
 
+## Sprint 6 — CONVENTION v0.4 (authoring guidance from real-session friction) 📝
+
+**Goal:** Bake two session-derived authoring lessons into the spec as doc-only additions, so future spec authors don't re-discover them.
+
+**Deliverable:** `CONVENTION.md` v0.4 — adds `_temp`-as-working-copy apply procedure under `deliver` lifecycle ([#10](https://github.com/chaz-clark/handoff/issues/10)), and a new top-level "Authoring guidance — avoiding self-referential commit hashes" section ([#11](https://github.com/chaz-clark/handoff/issues/11)).
+
+**Status:** Complete ✅
+
+| # | Story | Size | Status | Commit |
+|---|---|---|---|---|
+| #10 | Codify the `_temp`-as-working-copy pattern as canonical apply procedure | S | `[x]` | 5e9452d |
+| #11 | Document the self-referential commit-hash pattern: prefer two-commit over `--amend` | XS | `[x]` | 5e9452d |
+
+**Work order:** Bundled — both doc-only, both derived from session lessons (#10 from Sprint 2.5, #11 from the same self-referential dance that needed the backfill commit `9228151`). Single commit since neither conflicts with the other and both land in adjacent sections.
+
+**Design decisions made:**
+
+- Insertion placement: #10 as a `####` sub-subsection of `### deliver lifecycle` (it's specifically the deliver-apply procedure, so it lives with the lifecycle). #11 as a new top-level `##` section "Authoring guidance" (it's spec-wide guidance for anyone writing tracked lifecycle records, not deliver-specific).
+- Scope tightness: #10 names the procedure as **conflict-only** — for trivial `deliver` applies with no in-flight changes, a straight `mv` is still valid. The `_temp` workflow isn't the default for every apply.
+- #11 added three patterns rather than picking one: two-commit (preferred), `--amend` warning (anti-pattern), date-based references (precision-trading fallback). Real-world authoring sometimes wants each.
+
+**Lessons:**
+
+- Sprint 6 felt very natural — the issues were filed from session reflections at v0.3 ship time, then resolved in a single small sprint. Closing-the-loop sprint pattern: ship → reflect → file → resolve in the next sprint.
+
+---
+
 ## Completed Sprints (rollup)
 
 | Sprint | Deliverable | Stories closed | Final commit |
@@ -209,6 +236,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 3 — Producer Surface | REPO_CARD spec + AGENTS_snippet.md | #5, #7 | 7b52a50 |
 | 4 — Examples | examples/README.md linking to real handoffs in this repo | #2 | 4ab910e |
 | 5 — Public Launch Prep | README.md + templates/ × 4 + LICENSE (CC0) + tag v0.3 | (no GH stories — non-story items) | 039e7e8 |
+| 6 — CONVENTION v0.4 | _temp apply procedure + commit-hash authoring guidance | #10, #11 | 5e9452d |
 
 ---
 
