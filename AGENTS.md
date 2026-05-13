@@ -23,21 +23,15 @@ handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
 ├── AGENTS_snippet.md     # paste-into-consumer-AGENTS.md snippet teaching the handoff convention to receiving agents
 ├── CONVENTION.md         # the formal spec (Direction, Status, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS_snippet)
+├── LICENSE               # CC0 1.0 Universal — public-domain dedication
+├── README.md             # public pitch + quickstart for consumers
+├── archive/              # origin / historical docs (currently: SEED_CONTEXT.md, kept as provenance after README superseded it)
 ├── examples/             # README pointing at real-world handoffs in this repo (currently: 1 deliver-direction example)
-├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
 ├── handoffs/             # canonical consumer record of handoffs received here (currently: the 2026-05-13 Make-AI-Agents AGENTS.md v3.6 upgrade — applied)
-├── archive/              # historical/origin docs (currently holds the seed context note; will be superseded by README once authored)
+├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
+├── templates/            # 4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal
 ├── .gitignore            # ignores Make-AI-Agents/ and gh-issues-agent/ (local-only tooling clones)
 └── .gitattributes
-```
-
-Planned additions (per archive/SEED_CONTEXT.md → "What goes in this repo"):
-
-```
-handoff/
-├── README.md             # public pitch + quickstart
-├── templates/            # contract_change.md, feature_request.md, bug_handoff.md, design_proposal.md
-└── LICENSE               # MIT or CC0 — open question
 ```
 
 ## Working Style
@@ -59,17 +53,11 @@ This project follows the behavioral discipline defined in `Make-AI-Agents/knowle
 
 _Last updated: 2026-05-13_
 
-- Repo is past seed stage. `CONVENTION.md` v0.3 codifies the full schema (Direction, Status, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix); paste-ready `AGENTS_snippet.md` lives at root; `examples/` seeded with one real-world `deliver` example. `README.md` and `templates/` remain to be authored.
+- Convention is feature-complete: `CONVENTION.md` v0.3 codifies the full schema (Direction, Status, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix); paste-ready `AGENTS_snippet.md` lives at root; `templates/` holds 4 scaffolds matching the v0.3 header; `examples/` seeded with one real-world `deliver` example; `README.md` published; `LICENSE` is CC0 1.0 (paste-friendly for the convention's adoption pattern). All 9 founding GitHub stories closed.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
 - **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh-issues-agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit when expanding tooling support.
-- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"; `examples/` seeded in this commit, closing the last open GitHub story):
-  1. Author canonical `README.md` (public-facing pitch).
-  2. Author `templates/` (3–4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal) matching CONVENTION.md v0.3's required header + REPO_CARD format.
-  3. Add a `LICENSE` (MIT or CC0 — see open questions).
-  4. First tag (v0.3) to give clone consumers a stable point.
-  5. Clone into a consumer repo as dogfood, then propagate.
-  6. Grow `examples/` organically as new real handoffs land in this repo.
-- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
+- **Next steps**: tag `v0.3` lands alongside this commit. Beyond that, no active sprint work — convention is feature-complete. Dogfood is **already happening** in consumer repos (any bugs surface as GitHub issues filed here via the `gh_issues_agent` skill running there — genchi genbutsu). `examples/` will grow organically as new real handoffs land in this repo (see `examples/README.md` → "Adding new examples" for the canonical entry shape).
+- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"; ~~license choice~~ → resolved as CC0): whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
 
 ## Domain Terms
 
