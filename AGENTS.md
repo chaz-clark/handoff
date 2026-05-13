@@ -57,16 +57,16 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 
 _Last updated: 2026-05-13_
 
-- Repo is past seed stage. `CONVENTION.md` v0.1 codifies Direction, Status, and the required metadata header; `README.md`, `templates/`, and `examples/` remain to be authored.
+- Repo is past seed stage. `CONVENTION.md` v0.2 codifies Direction, Status, the required metadata header, plus optional `Sensitivity` and `Companions` schemas with exclusion guidance; `README.md`, `templates/`, and `examples/` remain to be authored.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
 - **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh-issues-agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit when expanding tooling support.
-- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"; `CONVENTION.md` v0.1 landed in this commit):
+- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"; `CONVENTION.md` v0.2 landed in this commit):
   1. Author canonical `README.md` (public-facing pitch).
-  2. Extend `CONVENTION.md` to v0.2 — add `Sensitivity:` ([#8](https://github.com/chaz-clark/handoff/issues/8)) and `Companions:` ([#9](https://github.com/chaz-clark/handoff/issues/9)) schemas; address `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)) and `AGENTS_snippet.md` ([#7](https://github.com/chaz-clark/handoff/issues/7)).
+  2. Extend `CONVENTION.md` to v0.3 — `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)) and `AGENTS_snippet.md` ([#7](https://github.com/chaz-clark/handoff/issues/7)).
   3. Author `templates/` (3–4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal) matching CONVENTION.md's required header.
-  4. Populate `examples/` ([#2](https://github.com/chaz-clark/handoff/issues/2)) with real-world handoffs annotated against the v0.1 schema.
+  4. Populate `examples/` ([#2](https://github.com/chaz-clark/handoff/issues/2)) with real-world handoffs annotated against the v0.2 schema.
   5. Add a `LICENSE` (MIT or CC0 — see open questions).
-  6. First tag (v0.1) to give clone consumers a stable point.
+  6. First tag (v0.2) to give clone consumers a stable point.
   7. Clone into AgentJ first (dogfood) — gitignored at AgentJ's root — then propagate to canvas_toolbox, course repos, and Make-AI-Agents itself.
 - **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
 
