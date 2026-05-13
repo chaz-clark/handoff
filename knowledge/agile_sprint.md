@@ -122,16 +122,23 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 **Goal:** Capability surface so consumers know what a producer accepts before authoring; receiving-agent prompt prefix so agents recognize handoff docs as a structured kind, not prose.
 
-**Deliverable:** `REPO_CARD.md` spec + `AGENTS_snippet.md` content (likely bundled as `CONVENTION.md` v0.3).
+**Deliverable:** `CONVENTION.md` v0.3 (adds REPO_CARD + AGENTS_snippet sections) + new file `handoff/AGENTS_snippet.md` as the paste-ready snippet.
 
-**Status:** Not started `[ ]`
+**Status:** Complete ✅
 
 | # | Story | Size | Status | Commit |
 |---|---|---|---|---|
-| #5 | Adopt AgentCard-equivalent REPO_CARD.md for producer capability surface | M–L | `[ ]` | — |
-| #7 | Specify AGENTS_snippet.md content — handoff RECOMMENDED_PROMPT_PREFIX equivalent | M | `[ ]` | — |
+| #5 | Adopt AgentCard-equivalent REPO_CARD.md for producer capability surface | M–L | `[x]` | 7b52a50 |
+| #7 | Specify AGENTS_snippet.md content — handoff RECOMMENDED_PROMPT_PREFIX equivalent | M | `[x]` | 7b52a50 |
 
-**Suggested work order:** #5 first — REPO_CARD is the surface that the AGENTS_snippet teaches consumers to read. Then #7 builds on a concrete artifact rather than a placeholder.
+**Work order:** Both bundled — REPO_CARD is the surface; AGENTS_snippet teaches consumers to read it. Authoring them together let the snippet's sixth rule cite REPO_CARD concretely instead of as a placeholder.
+
+**Design decisions made:**
+
+- REPO_CARD format: bold-labeled `.md` (canonical), with `.handoff-card.json` documented as an optional alternative for repos that prefer JSON.
+- REPO_CARD `Status` enum: `accepting / freeze / archived` (three values; sufficient to cover the lifecycle states a producer surface needs).
+- AGENTS_snippet length: kept short (~55 lines) so consumers can paste without bloating their `AGENTS.md`. Authored as a real usable file at handoff root, not just a spec.
+- AGENTS_snippet semantic count: six rules (the five from issue #7 + a sixth for REPO_CARD pre-check on outbound authoring, naturally added when bundling #5 and #7 together).
 
 ---
 
@@ -159,6 +166,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 1 — CONVENTION v0.1 | Direction/Status/Metadata schema | #3, #4, #6 | 3f6edb3 |
 | 2 — CONVENTION v0.2 | Sensitivity + Companions | #8, #9 | d805cc8 |
 | 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3a74db5 |
+| 3 — Producer Surface | REPO_CARD spec + AGENTS_snippet.md | #5, #7 | 7b52a50 |
 
 ---
 
