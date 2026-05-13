@@ -22,6 +22,7 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
 ├── CONVENTION.md         # the formal spec (Direction, Status, metadata header, lifecycle, filename conventions)
+├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
 ├── archive/              # historical/origin docs (currently holds the seed context note; will be superseded by README once authored)
 ├── .gitignore            # ignores Make-AI-Agents/ and gh-issues-agent/ (local-only tooling clones)
 └── .gitattributes
@@ -40,7 +41,7 @@ handoff/
 
 ## Working Style
 
-This project follows the behavioral discipline defined in `knowledge/behavioral_discipline.md` (if present in this repo) or the equivalent discipline loaded via the host tool's skill system. For the full principles and override rules, see that file → "The Ten Principles". The four no-override principles (P-001 Read Before Claiming, P-003 Stop on Defect, P-007 Pull Don't Push, P-010 Respect Intent) apply unconditionally.
+This project follows the behavioral discipline defined in `Make-AI-Agents/knowledge/behavioral_discipline.md` — the discipline file lives inside the `Make-AI-Agents/` clone at this repo's root (gitignored per the clone+gitignore convention noted in Project-specific rules below). To refresh the discipline: `cd Make-AI-Agents && git pull`. For the full principles and override rules, see that file → "The Ten Principles". The four no-override principles (P-001 Read Before Claiming, P-003 Stop on Defect, P-007 Pull Don't Push, P-010 Respect Intent) apply unconditionally.
 
 **Project-specific rules**:
 - Keep convention docs tool-agnostic. No "when using Claude Code, do X" or "in Cursor only" language in `README.md`, `CONVENTION.md`, or templates. Tool-specific guidance belongs in tool-specific config files, not in this repo.
