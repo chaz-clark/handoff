@@ -108,7 +108,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 | Source | Detail | Status | Commit |
 |---|---|---|---|
-| Handoff: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md` | Rewrite Working Style pointer from `knowledge/behavioral_discipline.md` (broken local resolve) → `Make-AI-Agents/knowledge/behavioral_discipline.md` (resolves via clone) | `[x]` | 3515aed |
+| Handoff: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md` | Rewrite Working Style pointer from `knowledge/behavioral_discipline.md` (broken local resolve) → `Make-AI-Agents/knowledge/behavioral_discipline.md` (resolves via clone) | `[x]` | 3a74db5 |
 
 **Lessons:**
 
@@ -158,7 +158,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 0 — Bootstrap and Cleanup | Repo baseline + #1 fix | #1 | c4537a5 |
 | 1 — CONVENTION v0.1 | Direction/Status/Metadata schema | #3, #4, #6 | 3f6edb3 |
 | 2 — CONVENTION v0.2 | Sensitivity + Companions | #8, #9 | d805cc8 |
-| 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3515aed |
+| 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3a74db5 |
 
 ---
 
