@@ -167,6 +167,37 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 ---
 
+## Sprint 5 — Public Launch Prep (README + templates + LICENSE + tag) 🚀
+
+**Goal:** Ship the public-facing layer of the convention: a pitch (`README.md`), 4 fill-in scaffolds (`templates/`), a license dedication (`LICENSE`), and the first tag (`v0.3`).
+
+**Deliverable:** `README.md` + `templates/` × 4 + `LICENSE` (CC0 1.0) + git tag `v0.3`.
+
+**Status:** Complete ✅
+
+**Note: no GitHub stories.** Sprint 5 closed out the four non-story items from the Active Context Next steps list. Items 5 and 6 (consumer dogfood, organic example growth) are handled outside the working tree (real-world genchi genbutsu) and as a passive procedure documented in `examples/README.md` respectively.
+
+| Source | Detail | Status | Commit |
+|---|---|---|---|
+| Next-step item 1 | `README.md` — public pitch + quickstart (clone-and-gitignore adoption, AGENTS_snippet paste, link to spec/templates/examples) | `[x]` | 039e7e8 |
+| Next-step item 2 | `templates/` × 4 (contract_change, feature_request, bug_handoff, design_proposal) pre-filled with v0.3 metadata header | `[x]` | 039e7e8 |
+| Next-step item 3 | `LICENSE` — CC0 1.0 Universal | `[x]` | 039e7e8 |
+| Next-step item 4 | git tag `v0.3` | `[x]` | (tag — points at 039e7e8) |
+
+**Design decisions made:**
+
+- LICENSE: CC0 over MIT. Convention adoption pattern (clone the spec, paste the snippet) benefits from zero attribution friction; MIT would require attribution in every consumer that embeds AGENTS_snippet.
+- Template direction: all 4 templates default to `Direction: request` since they're consumer-initiates flows. `deliver`-direction handoffs are producer-authored and template less well — adapt one of the 4 if needed.
+- README scope: kept under 70 lines. Lands the pitch, the quickstart, and the layout map; depth lives in `CONVENTION.md`.
+- Tag granularity: single `v0.3` covering the full feature-complete state (Sprints 0–5). Did not retro-tag v0.1 and v0.2; the commit history is the audit trail.
+
+**Lessons:**
+
+- Sprint 5 was lighter than Sprints 1–3 because the design decisions were already made; this sprint was mostly authorship + publishing. A "launch prep" sprint at the end of a spec project consistently looks like that.
+- `genchi genbutsu` reframing of item 5 (consumer dogfood) is worth remembering: a convention proves itself in real use, not in synthetic test repos. Issues filed against `chaz-clark/handoff` from real consumer agents will be the v0.3 validation signal.
+
+---
+
 ## Completed Sprints (rollup)
 
 | Sprint | Deliverable | Stories closed | Final commit |
@@ -177,6 +208,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3a74db5 |
 | 3 — Producer Surface | REPO_CARD spec + AGENTS_snippet.md | #5, #7 | 7b52a50 |
 | 4 — Examples | examples/README.md linking to real handoffs in this repo | #2 | 4ab910e |
+| 5 — Public Launch Prep | README.md + templates/ × 4 + LICENSE (CC0) + tag v0.3 | (no GH stories — non-story items) | 039e7e8 |
 
 ---
 
