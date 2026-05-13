@@ -23,6 +23,7 @@ handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
 ├── AGENTS_snippet.md     # paste-into-consumer-AGENTS.md snippet teaching the handoff convention to receiving agents
 ├── CONVENTION.md         # the formal spec (Direction, Status, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS_snippet)
+├── examples/             # README pointing at real-world handoffs in this repo (currently: 1 deliver-direction example)
 ├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
 ├── handoffs/             # canonical consumer record of handoffs received here (currently: the 2026-05-13 Make-AI-Agents AGENTS.md v3.6 upgrade — applied)
 ├── archive/              # historical/origin docs (currently holds the seed context note; will be superseded by README once authored)
@@ -36,7 +37,6 @@ Planned additions (per archive/SEED_CONTEXT.md → "What goes in this repo"):
 handoff/
 ├── README.md             # public pitch + quickstart
 ├── templates/            # contract_change.md, feature_request.md, bug_handoff.md, design_proposal.md
-├── examples/             # real-world reference handoff(s)
 └── LICENSE               # MIT or CC0 — open question
 ```
 
@@ -59,16 +59,16 @@ This project follows the behavioral discipline defined in `Make-AI-Agents/knowle
 
 _Last updated: 2026-05-13_
 
-- Repo is past seed stage. `CONVENTION.md` v0.3 codifies the full schema (Direction, Status, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix); paste-ready `AGENTS_snippet.md` lives at root. `README.md`, `templates/`, and `examples/` remain to be authored.
+- Repo is past seed stage. `CONVENTION.md` v0.3 codifies the full schema (Direction, Status, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix); paste-ready `AGENTS_snippet.md` lives at root; `examples/` seeded with one real-world `deliver` example. `README.md` and `templates/` remain to be authored.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
 - **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh-issues-agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit when expanding tooling support.
-- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"; `CONVENTION.md` v0.3 + `AGENTS_snippet.md` land in this commit):
+- **Next steps** (suggested order, from `archive/SEED_CONTEXT.md` → "Next steps"; `examples/` seeded in this commit, closing the last open GitHub story):
   1. Author canonical `README.md` (public-facing pitch).
   2. Author `templates/` (3–4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal) matching CONVENTION.md v0.3's required header + REPO_CARD format.
-  3. Populate `examples/` ([#2](https://github.com/chaz-clark/handoff/issues/2)) with real-world handoffs annotated against the v0.3 schema (one example already on hand: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md`).
-  4. Add a `LICENSE` (MIT or CC0 — see open questions).
-  5. First tag (v0.3) to give clone consumers a stable point.
-  6. Clone into AgentJ first (dogfood) — gitignored at AgentJ's root — then propagate to canvas_toolbox, course repos, and Make-AI-Agents itself.
+  3. Add a `LICENSE` (MIT or CC0 — see open questions).
+  4. First tag (v0.3) to give clone consumers a stable point.
+  5. Clone into a consumer repo as dogfood, then propagate.
+  6. Grow `examples/` organically as new real handoffs land in this repo.
 - **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
 
 ## Domain Terms
