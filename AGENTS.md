@@ -6,7 +6,7 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 
 **This is**:
 - A lightweight convention defining where cross-repo handoff docs live (`handoffs/` at the consumer repo root), how to name them, their lifecycle (author → drop → apply → archive), and a markdown structure readable by humans and agentic dev tools alike.
-- Designed to be **subtreed** into consumer repos so they pick up the same templates and rules without duplication.
+- Designed to be **cloned at the consumer repo root and gitignored**, so consumers pick up templates by `git pull` inside the clone — no subtree mechanics in host history.
 - A pairing with the `agents.md` precedent: an open convention, not a tool.
 
 **This is NOT**:
@@ -46,7 +46,7 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 - Keep convention docs tool-agnostic. No "when using Claude Code, do X" or "in Cursor only" language in `README.md`, `CONVENTION.md`, or templates. Tool-specific guidance belongs in tool-specific config files, not in this repo.
 - `Make-AI-Agents/` and `gh-issues-agent/` are **local-only clones** of the repos that host the skills used here (`make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent`, respectively). Both are gitignored and must never be committed or pushed. To refresh: `git -C <dir> pull`. To re-clone fresh: remove the folder and run `git clone https://github.com/chaz-clark/<repo>.git` from this repo's root. (Avoid `git subtree` here — we don't want this content in tracked history; clone-and-gitignore is cleaner.)
 - Singular vs plural matters: `handoff` is the repo and the convention name; `handoffs/` (plural) is the folder name inside consumer repos. Don't conflate them in docs.
-- Subtree posture for consumers is **pull-only** — this repo is the canonical source. Consumers do not push back upstream.
+- Consumer posture is **clone-and-pull only** — this repo is the canonical source. Consumers clone it at their repo root, gitignore the folder, and refresh via `git pull` inside the clone. They do not push back upstream.
 - **GitHub Issue vs handoff doc — when to use which**:
   - **GitHub Issue**: a concrete bug, contract drift, or improvement in another **public** repo that any user of that repo could hit. Issues are discoverable, trackable in the GitHub UI, and visible to maintainers and other consumers. Use `gh issue create --repo <owner>/<repo>` from this working directory.
   - **Handoff doc** (`handoffs/HANDOFF_<topic>.md`): a **design coordination** request to another repo discovered while working locally — typically a request that needs cross-repo context the producer's maintainer wouldn't have without reading the consumer's design state. Authored in the consumer's `handoffs/` folder, dropped into the producer's root as `<CONSUMER>_HANDOFF_<topic>.md` when ready, deleted from the producer once applied.
@@ -55,7 +55,7 @@ This project follows the behavioral discipline defined in `knowledge/behavioral_
 
 ## Active Context
 
-_Last updated: 2026-04-29_
+_Last updated: 2026-05-13_
 
 - Repo is at seed stage. `archive/SEED_CONTEXT.md` is the only design artifact; everything else (README, CONVENTION, templates, examples) is to be authored.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
@@ -66,8 +66,8 @@ _Last updated: 2026-04-29_
   3. Author `templates/` (3–4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal).
   4. Drop the real-world example into `examples/` (the existing `AGENTJ_HANDOFF_folder_io_update.md`).
   5. Add a `LICENSE` (MIT or CC0 — see open questions).
-  6. First tag (v0.1) to give subtree consumers a stable point.
-  7. Subtree into AgentJ first (dogfood), then propagate to canvas_toolbox, course repos, and Make-AI-Agents itself.
+  6. First tag (v0.1) to give clone consumers a stable point.
+  7. Clone into AgentJ first (dogfood) — gitignored at AgentJ's root — then propagate to canvas_toolbox, course repos, and Make-AI-Agents itself.
 - **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"): license choice (MIT vs CC0); whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
 
 ## Domain Terms
@@ -79,6 +79,6 @@ _Last updated: 2026-04-29_
 | producer repo | The repo that **receives** a dropped handoff and applies the requested change. Holds a temporary prefixed copy at its root until applied, then deletes it. |
 | author / drop / apply / archive | The four lifecycle stages of a handoff. *Author* in the consumer; *drop* a copy into the producer's root; *apply* the changes; *archive* by deleting the producer's copy (the consumer keeps the canonical record forever). |
 | `handoffs/` (folder, plural) | The folder inside a **consumer** repo holding canonical handoff docs (e.g., `handoffs/HANDOFF_<topic>.md`). |
-| `handoff/` (folder, singular) | The subtree directory created when this repo is pulled into a consumer (e.g., via `git subtree add --prefix=handoff …`). Read-only by convention; holds the spec and templates. |
+| `handoff/` (folder, singular) | The clone directory inside a consumer repo (created via `git clone https://github.com/chaz-clark/handoff.git` at the consumer's root, then added to the consumer's `.gitignore`). Read-only by convention; holds the spec and templates. |
 | `HANDOFF_<topic>.md` | Naming pattern in a consumer's `handoffs/` folder. The `HANDOFF_` prefix makes intent obvious at a glance. |
 | `<CONSUMER>_HANDOFF_<topic>.md` | Naming pattern when the file is **dropped into the producer** (e.g., `AGENTJ_HANDOFF_folder_io_update.md`). The capitalized consumer prefix signals "external request, originated elsewhere." |
