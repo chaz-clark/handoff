@@ -2,9 +2,9 @@
 
 The handoff convention — file structure, lifecycle, and required metadata for cross-repo design coordination via markdown.
 
-**Version:** 0.3 (working draft)
+**Version:** 0.4 (working draft)
 **Last updated:** 2026-05-13
-**Status:** v0.3 closes the originally-deferred extensions. Adds `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)) — a producer-side capability surface modeled on Google ADK's `AgentCard`. Adds `AGENTS_snippet.md` ([#7](https://github.com/chaz-clark/handoff/issues/7)) — a paste-into-consumer-AGENTS.md snippet teaching receiving agents to recognize handoff docs as a structured kind, modeled on OpenAI's `RECOMMENDED_PROMPT_PREFIX`. Both are additive to v0.2 (existing handoff docs and consumers without these remain valid).
+**Status:** v0.4 adds two authoring-guidance subsections from real-session friction. The `_temp`-as-working-copy apply procedure ([#10](https://github.com/chaz-clark/handoff/issues/10)) under `deliver` lifecycle codifies how to apply a delivered handoff when the producer's snapshot pre-dates consumer-side in-flight changes. The self-referential commit-hash guidance ([#11](https://github.com/chaz-clark/handoff/issues/11)) added as a new "Authoring guidance" section names the two-commit pattern as the canonical way to record commit-hash references in tracked files. Both are doc-only additions; no schema changes. v0.3 docs and consumers remain valid.
 
 ---
 
@@ -61,6 +61,21 @@ Both directions share four canonical stages — **author → drop → apply → 
 4. **archive** — Consumer deletes the root-level visibility copy if one was dropped. Canonical lives in consumer's `handoffs/` forever. `Status: archived`.
 
 In the `deliver` direction, the consumer is both recipient AND canonical keeper — the producer doesn't retain a copy.
+
+#### Apply procedure when a delivered file competes with local in-flight changes
+
+If a `deliver` handoff includes a "review-and-rename" companion file at consumer root (e.g., `AGENTS_updated.md` proposing to replace `AGENTS.md`), the consumer may have unrelated in-flight changes to the same canonical file that the producer's snapshot did NOT include. A naive `mv <proposed-file> <canonical-file>` silently drops the consumer's in-flight work.
+
+The canonical apply procedure when this conflict exists:
+
+1. Diff the producer's proposed file against the consumer's current canonical. Identify changes that exist in the canonical but NOT in the proposed file — those are the consumer's in-flight changes; the proposed file pre-dates them.
+2. Make a working copy of the current canonical: `cp <canonical>.md <canonical>_temp.md`.
+3. Apply the producer's proposed changes **surgically** to `<canonical>_temp.md` via targeted edits — NOT a full file swap.
+4. Verify: `diff <canonical>.md <canonical>_temp.md` should show ONLY the producer's intended change set.
+5. Swap: `mv <canonical>_temp.md <canonical>.md`.
+6. Delete the producer's visibility copy from root.
+
+For trivial cases — when the consumer has no in-flight changes to the canonical — a straight `mv <proposed-file> <canonical-file>` is still valid. The `_temp` workflow is the procedure when conflict exists, not the default for every apply.
 
 ---
 
@@ -291,7 +306,7 @@ When new `Direction`, `Status`, `Sensitivity`, or filename-pattern values are in
 
 ## Tooling implications
 
-The v0.3 schema enables:
+The v0.3 schema (carried into v0.4) enables:
 
 - **Status-grouped views** — `grep -l "Status: delivered" handoffs/` shows what's awaiting application at a glance.
 - **Direction filtering** — see who initiated what.
@@ -303,6 +318,18 @@ The v0.3 schema enables:
 - **Validator scripts** — a future `handoff_status_check.sh` can validate that every doc in `handoffs/` has the required fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens. A `handoff_credential_scan.sh` could grep for common credential patterns (`sk-`, `AKIA`, `ghp_`, `Bearer `, etc.) and flag docs missing a `Sensitivity` declaration stricter than `standard`. A `repo_card_check.sh` could validate REPO_CARD.md's enum values and required fields.
 
 No companion tooling is required for the convention to work; the schema is the contract.
+
+---
+
+## Authoring guidance — avoiding self-referential commit hashes
+
+When a tracked file records "this sprint / handoff / lifecycle event completed at commit `<hash>`," the recording and the commit form a chicken-and-egg: you can't know the commit hash until you commit, and committing changes the hash. There are two clean ways to avoid the resulting wart:
+
+- **Prefer the two-commit pattern.** Land the actual work in commit **A**. Then commit the reference-recording file (with **A**'s hash filled in) as commit **B**. The two commits are clearly ordered; no hash ambiguity. This is the pattern Sprints 3, 4, and 5 used for `knowledge/agile_sprint.md` updates referencing their deliverable commits.
+- **Avoid `git commit --amend` to fill commit-hash placeholders.** Amending rewrites the commit's hash, so the placeholder you just filled becomes stale — requiring yet another commit to fix. Sprint 2.5 hit this directly: `3515aed` → amended to `3a74db5` → backfill commit `9228151` to correct the now-stale reference.
+- **Acceptable alternative: use date-based references** instead of commit hashes (e.g., `**Applied:** 2026-05-13`). Dates don't self-reference. The trade-off is reduced precision — future readers must `git log --since=<date>` to find the exact commit, where a hash would identify it directly. Used in `Lifecycle marker` sections of handoff docs.
+
+The same guidance applies to any markdown record that wants to cite the commit it lives in: prefer two-commit, fall back to date-based, never `--amend` to backfill.
 
 ---
 
