@@ -144,17 +144,26 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 ## Sprint 4 — Examples 📚
 
-**Goal:** Populate `examples/` with real-world handoff docs annotated against the v0.3 schema. Makes the convention concrete.
+**Goal:** Seed `examples/` with real-world handoff docs annotated against the v0.3 schema. Makes the convention concrete.
 
-**Deliverable:** `examples/` folder with 2–3 docs + `examples/README.md`.
+**Deliverable:** `examples/README.md` cataloging real handoffs in this repo, linking (not copying) to canonical docs in `handoffs/`.
 
-**Status:** Not started `[ ]`
+**Status:** Complete ✅
 
 | # | Story | Size | Status | Commit |
 |---|---|---|---|---|
-| #2 | Create examples/ folder with first two real-world handoff examples | S | `[ ]` | — |
+| #2 | Create examples/ folder with first two real-world handoff examples | S | `[x]` | 4ab910e |
 
-**Suggested work order:** After Sprint 3 lands so examples can be annotated against the full v0.3 schema. Source material: existing canvas-toolbox handoffs (one design-proposal shape, one `deliver` shape — see issue body for paths).
+**Design decisions made:**
+
+- Strategy: **link, don't copy** — `examples/README.md` points at canonical docs in `handoffs/` rather than duplicating files. Avoids drift; one source of truth per handoff.
+- Seeded with the one real-world handoff that exists locally in this repo: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md` (`deliver` direction, applied during Sprint 2.5).
+- `request`-direction example marked as pending until a real `request` handoff is authored from/to this repo. Sprint 4 deliberately did NOT fabricate a synthetic example — real > complete.
+- The originally-named external examples (canvas-toolbox handoffs, AGENTJ_HANDOFF_*) are out of scope per the project rule: this repo concerns itself with its own state only.
+
+**Lessons:**
+
+- Sprint 4 was tighter in scope than the original issue body proposed because we hewed to the "only worry about our repo" rule. The README's "Adding new examples" section is the canonical hook for organic growth as new handoffs land here.
 
 ---
 
@@ -167,6 +176,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 2 — CONVENTION v0.2 | Sensitivity + Companions | #8, #9 | d805cc8 |
 | 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3a74db5 |
 | 3 — Producer Surface | REPO_CARD spec + AGENTS_snippet.md | #5, #7 | 7b52a50 |
+| 4 — Examples | examples/README.md linking to real handoffs in this repo | #2 | 4ab910e |
 
 ---
 
