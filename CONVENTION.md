@@ -2,9 +2,9 @@
 
 The handoff convention — file structure, lifecycle, and required metadata for cross-repo design coordination via markdown.
 
-**Version:** 0.2 (working draft)
+**Version:** 0.3 (working draft)
 **Last updated:** 2026-05-13
-**Status:** v0.2 extends v0.1 with `Sensitivity` ([#8](https://github.com/chaz-clark/handoff/issues/8)) and `Companions` ([#9](https://github.com/chaz-clark/handoff/issues/9)) schemas plus exclusion guidance. Both fields are optional and additive — v0.1 docs without them remain valid (Sensitivity defaults to `standard`, Companions defaults to absent). Still deferred to v0.3+: `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)) and `AGENTS_snippet.md` ([#7](https://github.com/chaz-clark/handoff/issues/7)).
+**Status:** v0.3 closes the originally-deferred extensions. Adds `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)) — a producer-side capability surface modeled on Google ADK's `AgentCard`. Adds `AGENTS_snippet.md` ([#7](https://github.com/chaz-clark/handoff/issues/7)) — a paste-into-consumer-AGENTS.md snippet teaching receiving agents to recognize handoff docs as a structured kind, modeled on OpenAI's `RECOMMENDED_PROMPT_PREFIX`. Both are additive to v0.2 (existing handoff docs and consumers without these remain valid).
 
 ---
 
@@ -17,12 +17,7 @@ This file codifies:
 - WHAT structured metadata every handoff must declare (`Status`, `Direction`, `Origin`, `Origin-Commit`, etc.).
 - HOW it's named in each repo it touches.
 
-It does NOT yet codify (deferred to v0.3+):
-
-| Deferred issue | What it adds |
-|---|---|
-| [#5](https://github.com/chaz-clark/handoff/issues/5) `REPO_CARD.md` | Producer capability surface (what handoff types accepted, owner, freeze state). |
-| [#7](https://github.com/chaz-clark/handoff/issues/7) `AGENTS_snippet.md` | Recommended prompt prefix teaching consumer agents how to recognize and act on handoff docs. |
+No fields or artifacts are currently deferred. Convention is feature-complete relative to issues #1–9; future versions will respond to new issues or real-world usage feedback.
 
 ---
 
@@ -207,16 +202,105 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 
 ---
 
+## REPO_CARD.md (producer capability surface)
+
+The optional `REPO_CARD.md` is a single-file declaration at a producer repo's root telling consumers what kinds of handoffs the repo accepts, who owns the lifecycle, and where to drop them. Modeled on Google ADK's `AgentCard` (`/.well-known/agent.json`, A2A protocol) but adapted to markdown so it sits next to `AGENTS.md` and `CONVENTION.md` without a separate parser.
+
+A consumer authoring a handoff should read the target producer's `REPO_CARD.md` first — it's the "do you accept what I'm sending?" check before authoring effort is invested.
+
+### Schema (bold-labeled fields, same format as handoff metadata)
+
+```markdown
+**Name:** <repo name>
+**Description:** <one-sentence summary of what this repo does>
+**Owner:** <GitHub handle, team, or `automated` if a bot applies handoffs>
+**Status:** accepting | freeze | archived
+**Drop-location:** <relative path where `request`-direction handoffs should be dropped; default `./` (repo root)>
+**Accepts-handoff-types:** <list of accepted types — see `templates/` names: contract_change, bug_handoff, feature_request, design_proposal>
+**Lifecycle-owner:** <who applies handoffs — usually the same as Owner, occasionally different (e.g., `automated` for a bot pipeline)>
+**Companion-files:**
+- <path> — <one-line note>
+```
+
+### Field guidance
+
+- **Name / Description** — concise. Producer-facing summary, not marketing copy. ~1 sentence each.
+- **Owner** — concrete (`@chaz-clark`, `@team-foo`). `automated` is valid if a bot applies handoffs without human review.
+- **Status** — `accepting` (open), `freeze` (paused during a release or migration), `archived` (no longer maintained; handoffs go elsewhere).
+- **Drop-location** — relative path. Default `./` means "drop at repo root." A repo with an `incoming/` folder for queued work would set `Drop-location: incoming/`.
+- **Accepts-handoff-types** — template names from `templates/` (Sprint 4). A repo can decline some types (e.g., a stable spec repo might decline `feature_request` but accept `contract_change`). Empty list = accepts nothing right now (often paired with `Status: freeze` or `archived`).
+- **Lifecycle-owner** — who's responsible for moving Status `delivered → applying → applied`.
+- **Companion-files** — pointers to context the consumer should read alongside the card. Typically `AGENTS.md`, `CONVENTION.md`, repo-specific guides.
+
+### Freeze semantics
+
+When `Status: freeze`, consumers hold handoffs and resume after the freeze lifts. The card may include an optional `**Freeze-until:**` date or condition (e.g., `release 2.0 cut`).
+
+### Example
+
+```markdown
+**Name:** canvas-toolbox
+**Description:** Local-first Canvas LMS course content sync, audit, and quality-check toolkit.
+**Owner:** @chaz-clark
+**Status:** accepting
+**Drop-location:** handoffs/
+**Accepts-handoff-types:**
+- contract_change
+- bug_handoff
+- design_proposal
+**Lifecycle-owner:** @chaz-clark
+**Companion-files:**
+- `AGENTS.md` — project context
+- `CONVENTION.md` — handoff convention spec (via `handoff/` clone)
+- `lib/agents/knowledge/` — agent knowledge files
+```
+
+### Why a separate card instead of inferring from AGENTS.md
+
+`AGENTS.md` is comprehensive — project context, working style, domain terms. A consumer authoring a handoff would have to parse all of that to find "do you accept this type right now?" `REPO_CARD.md` is small, load-bearing for one question, and `grep`-able. Agents can read the card's fields directly without prose parsing.
+
+### Optional JSON variant
+
+Repos preferring JSON (e.g., automated pipelines, A2A-style consumption) may publish `.handoff-card.json` instead with the same field set. Either is valid; `REPO_CARD.md` is the canonical form.
+
+---
+
+## AGENTS_snippet.md (receiving-agent prompt prefix)
+
+The handoff convention is only effective when receiving agents *recognize* handoff docs as a structured artifact with a lifecycle — not as conversation prose. Modeled on OpenAI Agents SDK's `RECOMMENDED_PROMPT_PREFIX` (`agents.extensions.handoff_prompt`), which exists because models without an explicit prefix narrate handoffs in prose ("I'll connect you to billing") instead of acting on them. The cross-repo handoff convention has the same vulnerability: without the prefix, an agent reading a dropped handoff doc may treat it as just-another-markdown.
+
+The canonical snippet lives at `handoff/AGENTS_snippet.md`. Consumers paste it (or a paraphrase preserving its semantics) into their own `AGENTS.md` (Working Style or any load-on-startup location).
+
+### What the snippet teaches receiving agents
+
+1. **Recognition** — files at `handoffs/HANDOFF_*.md`, `handoffs/<YYYY-MM-DD>_*.md`, `<CONSUMER>_HANDOFF_*.md` (at root), or `<PRODUCER>_DELIVERS_*.md` (at root) are HANDOFF DOCUMENTS, not conversation.
+2. **Lifecycle awareness** — read `Status:` and `Direction:`. Stages: `draft / delivered / applying / applied / archived / superseded`. Act only on `delivered`.
+3. **Surface, don't auto-apply** — summarize the handoff's request/delivery to the human user and get per-decision approval. The convention is per-proposal-approval.
+4. **Update Status on apply** — after committing the change, edit the handoff's `Status:` and append a `## Lifecycle marker` entry with the apply date.
+5. **Stop on missing referenced artifacts** — if the handoff names files, commits, or agents that don't exist locally, halt and ask. Do not infer; do not fabricate.
+
+### Sixth rule (added in v0.3 with REPO_CARD)
+
+6. **Before authoring an outbound handoff**, read the target producer's `REPO_CARD.md` if present. Confirm `Status: accepting` and that the intended type is in `Accepts-handoff-types`. Drop at `Drop-location`.
+
+### Update cadence
+
+When new `Direction`, `Status`, `Sensitivity`, or filename-pattern values are introduced in future CONVENTION versions, update `handoff/AGENTS_snippet.md` correspondingly so consumer agents recognize the new shapes.
+
+---
+
 ## Tooling implications
 
-The v0.2 schema enables:
+The v0.3 schema enables:
 
 - **Status-grouped views** — `grep -l "Status: delivered" handoffs/` shows what's awaiting application at a glance.
 - **Direction filtering** — see who initiated what.
 - **Origin-Commit traceability** — clone the originating repo at the named SHA to reproduce the design state.
 - **Sensitivity filtering** — `grep -L "Sensitivity:" handoffs/` finds docs that omitted the field; `grep -l "Sensitivity: restricted" handoffs/` finds ones flagged for handling care.
 - **Companions traversal** — chase chains of related handoffs (supersession, prerequisites, follow-ups) by following the bullet entries.
-- **Validator scripts** — a future `handoff_status_check.sh` can validate that every doc in `handoffs/` has the required fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens. A `handoff_credential_scan.sh` could grep for common credential patterns (`sk-`, `AKIA`, `ghp_`, `Bearer `, etc.) and flag docs missing a `Sensitivity` declaration that's stricter than `standard`.
+- **REPO_CARD pre-check** — `cat <producer-root>/REPO_CARD.md` before authoring an outbound handoff confirms the producer accepts the type and is currently `accepting` (not `freeze` / `archived`).
+- **AGENTS_snippet adoption check** — a consumer's `AGENTS.md` either contains the snippet's five (or six) recognition rules, or the consumer's receiving agent will mishandle handoff docs. `grep -q "handoff document recognition\|Five rules for handling a handoff" <consumer>/AGENTS.md` is a quick adoption probe.
+- **Validator scripts** — a future `handoff_status_check.sh` can validate that every doc in `handoffs/` has the required fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens. A `handoff_credential_scan.sh` could grep for common credential patterns (`sk-`, `AKIA`, `ghp_`, `Bearer `, etc.) and flag docs missing a `Sensitivity` declaration stricter than `standard`. A `repo_card_check.sh` could validate REPO_CARD.md's enum values and required fields.
 
 No companion tooling is required for the convention to work; the schema is the contract.
 
@@ -226,6 +310,6 @@ No companion tooling is required for the convention to work; the schema is the c
 
 The schema and lifecycle are grounded in existing agent-handoff precedent:
 
-- **OpenAI Agents SDK — Handoffs** ([docs](https://openai.github.io/openai-agents-python/handoffs/)): `HandoffInputData` provides a fixed-schema metadata structure for handoff transitions. `Direction: request` mirrors parent-initiates-transfer.
+- **OpenAI Agents SDK — Handoffs** ([docs](https://openai.github.io/openai-agents-python/handoffs/)): `HandoffInputData` provides a fixed-schema metadata structure for handoff transitions — informs the v0.1 Required Metadata Header. `RECOMMENDED_PROMPT_PREFIX` (in `agents.extensions.handoff_prompt`) is the direct precedent for v0.3's `AGENTS_snippet.md` — without it, agents narrate handoffs in prose instead of acting on them. `Direction: request` mirrors parent-initiates-transfer.
 - **Anthropic Claude Agent SDK — Subagents** ([docs](https://code.claude.com/docs/en/agent-sdk/subagents)): Subagent context isolation + `parent_tool_use_id` for traceability inform the `Origin-Commit` field. `Direction: deliver` mirrors subagent-result-returned-to-parent.
-- **Google ADK — A2A Protocol** ([intro](https://adk.dev/a2a/intro/)): `AgentCard` at well-known path is the precedent for the future `REPO_CARD.md` ([#5](https://github.com/chaz-clark/handoff/issues/5)).
+- **Google ADK — A2A Protocol** ([intro](https://adk.dev/a2a/intro/), [consuming quickstart](https://adk.dev/a2a/quickstart-consuming/)): `AgentCard` at well-known path (`/.well-known/agent.json`) is the precedent for v0.3's `REPO_CARD.md` — a single-file capability declaration consumers can read before initiating a handoff.
