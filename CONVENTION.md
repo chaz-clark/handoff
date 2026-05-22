@@ -2,9 +2,9 @@
 
 The handoff convention — file structure, lifecycle, and required metadata for cross-repo design coordination via markdown.
 
-**Version:** 0.4 (working draft)
-**Last updated:** 2026-05-13
-**Status:** v0.4 adds two authoring-guidance subsections from real-session friction. The `_temp`-as-working-copy apply procedure ([#10](https://github.com/chaz-clark/handoff/issues/10)) under `deliver` lifecycle codifies how to apply a delivered handoff when the producer's snapshot pre-dates consumer-side in-flight changes. The self-referential commit-hash guidance ([#11](https://github.com/chaz-clark/handoff/issues/11)) added as a new "Authoring guidance" section names the two-commit pattern as the canonical way to record commit-hash references in tracked files. Both are doc-only additions; no schema changes. v0.3 docs and consumers remain valid.
+**Version:** 0.5 (working draft)
+**Last updated:** 2026-05-22
+**Status:** v0.5 introduces **internal handoffs** ([#12](https://github.com/chaz-clark/handoff/issues/12)) — a handoff that crosses a *session* boundary instead of a *repo* boundary. Adds `Direction: internal` and `Status: parked`, plus a new "Internal handoffs (self-directed parking lots)" section defining two durable files (`parkinglot.md`, `long-term-parking.md`) with `Trigger:`-gated items. Additive: existing `request`/`deliver` docs and consumers remain valid. Prior v0.4 additions (the `_temp`-as-working-copy apply procedure [#10], the self-referential commit-hash guidance [#11]) carry forward unchanged.
 
 ---
 
@@ -17,7 +17,7 @@ This file codifies:
 - WHAT structured metadata every handoff must declare (`Status`, `Direction`, `Origin`, `Origin-Commit`, etc.).
 - HOW it's named in each repo it touches.
 
-No fields or artifacts are currently deferred. Convention is feature-complete relative to issues #1–9; future versions will respond to new issues or real-world usage feedback.
+The convention covers issues #1–12. Most coordination crosses a repo boundary (`request` / `deliver`); v0.5 adds the `internal` direction for context that crosses a *session* boundary within one repo. Future versions respond to new issues or real-world usage feedback.
 
 ---
 
@@ -37,8 +37,9 @@ Every handoff doc declares a `Direction:` — one of:
 |---|---|---|---|
 | `request` | Consumer's maintainer (or its agent) | Consumer needs producer to make a change. The handoff requests that change with the consumer's design context attached. | OpenAI Agents SDK handoff (parent-initiates-transfer) |
 | `deliver` | Producer's maintainer (or its agent) | Producer did work that affects consumer and is delivering findings/artifacts/recommendations for the consumer to apply. | Anthropic subagent result (subagent-delivers-to-parent); Google ADK A2A consume-result |
+| `internal` | This repo's maintainer (or its agent) | A handoff to a *future session* of the same repo: a good idea or deferred opportunity that shouldn't be acted on yet but must not be lost. Crosses a session boundary, not a repo boundary. | Agile retro "parking lot"; lean Kaizen backlog |
 
-The direction shapes the lifecycle (next section).
+`request` and `deliver` cross a repo boundary and share the four-stage lifecycle below. `internal` crosses a *session* boundary and has its own lighter lifecycle — see [Internal handoffs](#internal-handoffs-self-directed-parking-lots).
 
 ---
 
@@ -81,7 +82,7 @@ For trivial cases — when the consumer has no in-flight changes to the canonica
 
 ## Status enum
 
-The `Status:` field is one of six values:
+The `Status:` field is one of seven values:
 
 | Status | Meaning |
 |---|---|
@@ -91,8 +92,84 @@ The `Status:` field is one of six values:
 | `applied` | The change has landed in the receiving repo; the work portion of the handoff is done. |
 | `archived` | Handoff is fully settled; transient/dropped copies have been deleted, the canonical record persists in consumer's `handoffs/`. |
 | `superseded` | This handoff was replaced by a newer one. The replacement is named in `Companions:` (when codified in v0.2) or in a closing prose note. |
+| `parked` | (`internal` direction only) Recorded but deliberately not being acted on. Awaits its `Trigger:` condition. NOT committed work — committing an item is the act of taking it *out* of `parked`. See [Internal handoffs](#internal-handoffs-self-directed-parking-lots). |
 
 When a handoff's `Status` changes, update the file in place. An optional `## Lifecycle` section at the bottom of the file may log the prior Status + date for audit history.
+
+---
+
+## Internal handoffs (self-directed parking lots)
+
+Not every handoff crosses a repo boundary. A handoff can also cross a **session boundary** — a transfer of context from the current working session to a future one (human or agent) in the *same* repo. These are **internal handoffs**: `Direction: internal`.
+
+They solve idea-loss. A good idea generated mid-session that isn't ripe to act on now would otherwise be lost at session end. Working it prematurely is overproduction; dropping it is waste. Instead it's **parked** — recorded with the condition (`Trigger:`) that should pull it back out. This is the agile retrospective "parking lot" made durable, run as a lean Kaizen backlog: capture honors the idea without turning it into fake work-in-progress.
+
+Internal handoffs live in **two durable files**, split by ripeness and what blocks each item:
+
+| File | Holds | Blocked by | `Trigger:` flavor |
+|---|---|---|---|
+| `handoffs/parkinglot.md` | Good ideas, not fully baked, deferred because you're busy now | Your attention (capacity) | `next sprint`, `when the current workstream ships` |
+| `handoffs/long-term-parking.md` | Versions-ahead, evidence-gated, someday-maybe, pie-in-the-sky | External conditions (evidence / use case / upstream) | `when N users hit this`, `when upstream reaches v2`, `if we ever need X` |
+
+Neither file holds **committed** work. The moment an item is scheduled or approved it *leaves* the parking lot and becomes active work, tracked in the repo's sprint/roadmap record (e.g. `knowledge/agile_sprint.md`). Keeping committed work out is what keeps these files honest — they are the deliberate "not now" pile, not a second backlog of next actions.
+
+### The escalator
+
+The two files are rungs on one ladder; items ripen upward, and committing is the act of stepping *off* the ladder:
+
+```
+long-term-parking.md   (someday / evidence-gated)
+   │  evidence arrives, use case appears
+   ▼
+parkinglot.md          (good idea, busy now)
+   │  capacity frees / Trigger fires
+   ▼
+active work            (committed — sprint/roadmap record, NOT a parking-lot file)
+   ▼
+done
+```
+
+At any rung an item may instead **graduate sideways**: into a GitHub issue (a trackable story) or into a cross-repo `request`/`deliver` handoff if, when it ripens, it turns out to need another repo. The `Routes-to:` field records the intended destination.
+
+### Lifecycle (internal direction)
+
+```
+author → parked → (refinement: re-affirm | update Trigger | drop) → triggered → routed-out
+```
+
+- **author / parked** — add the item with `Status: parked` and a `Trigger:`.
+- **refinement** — on a cadence (each sprint close / `agile_sprint.md` update), review every parked item against current reality and either re-affirm it, update its `Trigger:`, or drop it if no longer valuable. Bump the file's `Last-refined:` date. `parkinglot.md` churns fast (reviewed often — pull or drop); `long-term-parking.md` churns slow (reviewed for "has evidence arrived yet?"). This is agile backlog refinement; the discipline is the lean Kaizen review — an un-reviewed backlog degrades into clutter, itself a waste.
+- **triggered → routed-out** — the `Trigger:` condition is met. The item is pulled into active work, or graduates into an issue / cross-repo handoff. Its parking-lot entry's `Status:` becomes `superseded` with a `Companions:` pointer to where it went (issue link, handoff path, or commit).
+
+### File shape
+
+Each file opens with a file-level header, then one block per parked item.
+
+**File-level header:**
+
+```markdown
+**File:** parkinglot.md            # or long-term-parking.md
+**Direction:** internal
+**Status:** parked
+**Purpose:** <one line — what this tier holds; explicitly NOT committed work>
+**Last-refined:** YYYY-MM-DD
+```
+
+**Per-item block:**
+
+```markdown
+### <item title>
+**Trigger:** <the condition that should pull this back out — its Definition of Ready>
+**Routes-to:** active-work | issue | handoff
+**Added:** YYYY-MM-DD
+**Origin-Commit:** <sha in this repo when the item was parked>
+
+<one paragraph: the idea, and why it's deliberately not now>
+```
+
+`Trigger:` is the field that distinguishes a parking lot from an unordered TODO list — items are **condition-gated**, not just unsorted. An item with no real trigger (nothing that would ever pull it back) is clutter; drop it at the next refinement.
+
+Internal handoffs may be **committed** (team-visible) or **gitignored** (private scratch) — the repo's choice. The convention supports both; the file shape is identical either way.
 
 ---
 
@@ -160,8 +237,8 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 ```markdown
 **Date:** YYYY-MM-DD
 **Author:** <human or agent + originating repo>
-**Direction:** request | deliver
-**Status:** draft | delivered | applying | applied | archived | superseded
+**Direction:** request | deliver | internal
+**Status:** draft | delivered | applying | applied | archived | superseded | parked
 **Origin:** <one-sentence: what produced this handoff (event, design pass, bug)>
 **Origin-Commit:** <git-sha in the authoring repo>
 **Topic:** <kebab-case slug matching the filename's <topic> portion>
@@ -179,8 +256,8 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 
 - **Date** — the date the handoff was authored. Not last-updated; use Status transitions or a `## Lifecycle` section for tracking updates.
 - **Author** — concrete attribution: `Chaz Clark (canvas-toolbox)`, `make_AGENTS agent (Make-AI-Agents)`, etc. Both human and agent attribution are valid.
-- **Direction** — see [Direction enum](#direction-enum).
-- **Status** — see [Status enum](#status-enum). Initial value is `draft` until dropped at the destination.
+- **Direction** — see [Direction enum](#direction-enum). For `internal` docs (parking lots), the header is file-level and items add `Trigger:` / `Routes-to:` — see [Internal handoffs](#internal-handoffs-self-directed-parking-lots).
+- **Status** — see [Status enum](#status-enum). Initial value is `draft` until dropped at the destination (`parked` for `internal` docs).
 - **Origin** — the EVENT that produced the handoff. Example: "Discovered missing field while wiring AgentJ's `submission_types` round-trip."
 - **Origin-Commit** — git SHA of the commit in the AUTHORING repo whose state produced the handoff. Lets the receiver inspect the exact code/design that motivated the work. Analogous to Anthropic's `parent_tool_use_id` (traces a result back to its invocation).
 - **Topic** — short kebab-case slug. Must match the `<topic>` portion of the filename so the file is self-locating.
@@ -212,8 +289,10 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 | Producer's root (dropped, transient) | `request` | `<CONSUMER>_HANDOFF_<topic>.md` |
 | Consumer's `handoffs/` (canonical) | `deliver` | `<YYYY-MM-DD>_<topic>.md` |
 | Consumer's root (visibility copy, transient, optional) | `deliver` | `<PRODUCER>_DELIVERS_<topic>.md` |
+| This repo's `handoffs/` (durable, near-term tier) | `internal` | `parkinglot.md` |
+| This repo's `handoffs/` (durable, far/someday tier) | `internal` | `long-term-parking.md` |
 
-`<CONSUMER>` and `<PRODUCER>` are the repo names in capitalized form (e.g., `AGENTJ`, `CANVAS-TOOLBOX`). `<topic>` is kebab-case and matches the `Topic:` field in the metadata header.
+`<CONSUMER>` and `<PRODUCER>` are the repo names in capitalized form (e.g., `AGENTJ`, `CANVAS-TOOLBOX`). `<topic>` is kebab-case and matches the `Topic:` field in the metadata header. The two `internal` filenames are fixed (one of each per repo, not per-topic) — they are multi-item files, not one-handoff-per-file.
 
 ---
 
@@ -298,6 +377,10 @@ The canonical snippet lives at `handoff/AGENTS_snippet.md`. Consumers paste it (
 
 6. **Before authoring an outbound handoff**, read the target producer's `REPO_CARD.md` if present. Confirm `Status: accepting` and that the intended type is in `Accepts-handoff-types`. Drop at `Drop-location`.
 
+### Seventh rule (added in v0.5 with internal handoffs)
+
+7. **Do not auto-act on `parked` items.** `parkinglot.md` and `long-term-parking.md` (`Direction: internal`) are deferred by design. Act on an item only when the human directs it, or when its `Trigger:` condition is genuinely met — then pull it into active work or graduate it (issue / cross-repo handoff) and set that item's `Status: superseded` with a `Companions:` pointer to its new home.
+
 ### Update cadence
 
 When new `Direction`, `Status`, `Sensitivity`, or filename-pattern values are introduced in future CONVENTION versions, update `handoff/AGENTS_snippet.md` correspondingly so consumer agents recognize the new shapes.
@@ -314,7 +397,8 @@ The v0.3 schema (carried into v0.4) enables:
 - **Sensitivity filtering** — `grep -L "Sensitivity:" handoffs/` finds docs that omitted the field; `grep -l "Sensitivity: restricted" handoffs/` finds ones flagged for handling care.
 - **Companions traversal** — chase chains of related handoffs (supersession, prerequisites, follow-ups) by following the bullet entries.
 - **REPO_CARD pre-check** — `cat <producer-root>/REPO_CARD.md` before authoring an outbound handoff confirms the producer accepts the type and is currently `accepting` (not `freeze` / `archived`).
-- **AGENTS_snippet adoption check** — a consumer's `AGENTS.md` either contains the snippet's five (or six) recognition rules, or the consumer's receiving agent will mishandle handoff docs. `grep -q "handoff document recognition\|Five rules for handling a handoff" <consumer>/AGENTS.md` is a quick adoption probe.
+- **AGENTS_snippet adoption check** — a consumer's `AGENTS.md` either contains the snippet's seven recognition rules, or the consumer's receiving agent will mishandle handoff docs. `grep -q "handoff document recognition\|rules for handling a handoff" <consumer>/AGENTS.md` is a quick adoption probe.
+- **Parked-item hygiene** — `grep -c "^### " handoffs/long-term-parking.md` counts garage items; a file whose `Last-refined:` date is stale signals an overdue backlog-refinement pass.
 - **Validator scripts** — a future `handoff_status_check.sh` can validate that every doc in `handoffs/` has the required fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens. A `handoff_credential_scan.sh` could grep for common credential patterns (`sk-`, `AKIA`, `ghp_`, `Bearer `, etc.) and flag docs missing a `Sensitivity` declaration stricter than `standard`. A `repo_card_check.sh` could validate REPO_CARD.md's enum values and required fields.
 
 No companion tooling is required for the convention to work; the schema is the contract.

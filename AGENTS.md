@@ -22,12 +22,12 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
 ├── AGENTS_snippet.md     # paste-into-consumer-AGENTS.md snippet teaching the handoff convention to receiving agents
-├── CONVENTION.md         # the formal spec (Direction, Status, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS_snippet)
+├── CONVENTION.md         # the formal spec (Direction inc. internal, Status inc. parked, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS_snippet, internal handoffs)
 ├── LICENSE               # CC0 1.0 Universal — public-domain dedication
 ├── README.md             # public pitch + quickstart for consumers
 ├── archive/              # origin / historical docs (currently: SEED_CONTEXT.md, kept as provenance after README superseded it)
 ├── examples/             # README pointing at real-world handoffs in this repo (currently: 1 deliver-direction example)
-├── handoffs/             # canonical consumer record of handoffs received here (currently: the 2026-05-13 Make-AI-Agents AGENTS.md v3.6 upgrade — applied)
+├── handoffs/             # canonical record of handoffs for this repo: the 2026-05-13 Make-AI-Agents deliver (applied) + the two internal parking lots (parkinglot.md, long-term-parking.md)
 ├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
 ├── templates/            # 4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal
 ├── .gitignore            # ignores Make-AI-Agents/ and gh-issues-agent/ (local-only tooling clones)
@@ -51,13 +51,13 @@ This project follows the behavioral discipline defined in `Make-AI-Agents/knowle
 
 ## Active Context
 
-_Last updated: 2026-05-13_
+_Last updated: 2026-05-22_
 
-- Convention is feature-complete at v0.4: `CONVENTION.md` codifies the full schema (Direction, Status, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix) plus v0.4 authoring guidance (`_temp`-as-working-copy apply procedure for `deliver` conflicts, two-commit pattern for self-referential hashes). Paste-ready `AGENTS_snippet.md` lives at root; `templates/` holds 4 scaffolds; `examples/` seeded with one real-world `deliver` example; `README.md` published; `LICENSE` is CC0 1.0. All 9 founding stories + 2 enhancement issues (#10, #11) closed.
+- Convention is feature-complete at v0.5: `CONVENTION.md` codifies the full schema (Direction `request`/`deliver`/`internal`, Status incl. `parked`, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix) plus v0.4 authoring guidance (`_temp`-as-working-copy apply, two-commit pattern) and v0.5 **internal handoffs** (self-directed parking lots — `handoffs/parkinglot.md` near-term + `handoffs/long-term-parking.md` someday, `Trigger:`-gated). Paste-ready `AGENTS_snippet.md` (now 7 rules) lives at root; `templates/` holds 4 scaffolds; `examples/` seeded with one real-world `deliver` example; `README.md` published; `LICENSE` is CC0 1.0. All 9 founding stories + 3 enhancement issues (#10, #11, #12) closed.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
-- **Parked idea**: a `scripts/bootstrap_tooling.sh` that idempotently installs the local tooling clones (`Make-AI-Agents`, `gh-issues-agent`) + gitignore entries in any consumer repo. Discussed during initial setup; not yet authored — revisit when expanding tooling support.
-- **Next steps**: tag `v0.3` lands alongside this commit. Beyond that, no active sprint work — convention is feature-complete. Dogfood is **already happening** in consumer repos (any bugs surface as GitHub issues filed here via the `gh_issues_agent` skill running there — genchi genbutsu). `examples/` will grow organically as new real handoffs land in this repo (see `examples/README.md` → "Adding new examples" for the canonical entry shape).
-- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"; ~~license choice~~ → resolved as CC0): whether the convention should *require* an `AGENTS.md` reference in consumer repos; whether examples use real repo names (lean: yes); whether to add a small ack/archive script.
+- **Deferred work now lives in the parking lots** (v0.5 dogfood): the old `bootstrap_tooling.sh` parked-idea bullet moved to `handoffs/long-term-parking.md`; near-term ideas (e.g. a `handoff_status_check.sh` validator) live in `handoffs/parkinglot.md`. Review them at each sprint close (backlog refinement) and bump their `Last-refined:` date.
+- **Next steps**: tag `v0.5` lands with this sprint. No active sprint work beyond that — convention is feature-complete. Dogfood is **already happening** in consumer repos (bugs surface as GitHub issues filed here via the `gh_issues_agent` skill running there — genchi genbutsu). `examples/` grows organically as new real handoffs land (see `examples/README.md` → "Adding new examples").
+- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"; ~~license choice~~ → resolved as CC0): whether examples use real repo names (lean: yes); whether to add a small ack/archive script. (The "require `AGENTS_snippet`/`AGENTS.md` reference in consumers?" question now sits in `handoffs/long-term-parking.md`, evidence-gated.)
 
 ## Domain Terms
 
@@ -71,3 +71,7 @@ _Last updated: 2026-05-13_
 | `handoff/` (folder, singular) | The clone directory inside a consumer repo (created via `git clone https://github.com/chaz-clark/handoff.git` at the consumer's root, then added to the consumer's `.gitignore`). Read-only by convention; holds the spec and templates. |
 | `HANDOFF_<topic>.md` | Naming pattern in a consumer's `handoffs/` folder. The `HANDOFF_` prefix makes intent obvious at a glance. |
 | `<CONSUMER>_HANDOFF_<topic>.md` | Naming pattern when the file is **dropped into the producer** (e.g., `AGENTJ_HANDOFF_folder_io_update.md`). The capitalized consumer prefix signals "external request, originated elsewhere." |
+| internal handoff | A handoff to a *future session* of the same repo (`Direction: internal`) — crosses a session boundary, not a repo boundary. Lives in the two parking-lot files. Solves idea-loss without working an idea prematurely. |
+| `parkinglot.md` | Near-term internal parking lot: "good idea, busy now." Capacity-gated items likely to be picked up soon. `Status: parked`. |
+| `long-term-parking.md` | Far-horizon internal parking lot: versions-ahead / evidence-gated / someday-maybe. Each item has a `Trigger:` (its Definition of Ready). NOT a roadmap — committing an item moves it out. |
+| `Trigger:` | The condition that pulls a parked item back out (its Definition of Ready). Distinguishes a parking lot from an unordered TODO list — items are condition-gated. |

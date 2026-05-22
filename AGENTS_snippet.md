@@ -1,6 +1,6 @@
 # AGENTS_snippet.md — Handoff Convention Recognition
 
-Paste this snippet (or a paraphrase preserving the six recognition rules) into your repo's `AGENTS.md` — Working Style section, or any load-on-startup location. Each consumer repo may customize phrasing; the six rules below should remain semantically intact.
+Paste this snippet (or a paraphrase preserving the seven recognition rules) into your repo's `AGENTS.md` — Working Style section, or any load-on-startup location. Each consumer repo may customize phrasing; the seven rules below should remain semantically intact.
 
 The canonical version lives at `handoff/AGENTS_snippet.md` in the `handoff` clone. Refresh it (and your paste) when `CONVENTION.md` versions up.
 
@@ -16,8 +16,10 @@ This repo participates in the cross-repo `handoff` convention (canonical spec: [
 | `handoffs/<YYYY-MM-DD>_<topic>.md` | Incoming `deliver`-direction handoff (canonical consumer record) |
 | `<CONSUMER>_HANDOFF_<topic>.md` at repo root | Incoming `request`-direction handoff dropped by another consumer for us to apply |
 | `<PRODUCER>_DELIVERS_<topic>.md` at repo root | Visibility copy of an incoming `deliver` handoff (canonical is in `handoffs/`) |
+| `handoffs/parkinglot.md` | `internal` handoff — near-term parked ideas ("good idea, busy now"); deferred by design |
+| `handoffs/long-term-parking.md` | `internal` handoff — far/someday parked ideas (evidence-gated, pie-in-the-sky); deferred by design |
 
-## Six rules for handling a handoff document
+## Seven rules for handling a handoff document
 
 1. **Read the metadata header first.** Every handoff opens with bold-labeled fields: `Date`, `Author`, `Direction`, `Status`, `Origin`, `Origin-Commit`, `Topic`. Optional: `Sensitivity`, `Companions`. If any required field is missing, STOP and ask the human user.
 
@@ -36,6 +38,8 @@ This repo participates in the cross-repo `handoff` convention (canonical spec: [
 
    If no `REPO_CARD.md` exists at the target, default to dropping at the producer's repo root for `request` direction; for `deliver` direction, drop into the consumer's `handoffs/` folder.
 
+7. **Do not auto-act on `parked` items.** `parkinglot.md` and `long-term-parking.md` (`Direction: internal`) are this repo's own deferred-idea backlog — deferred *by design*. Act on a parked item only when the human directs it, or when its `Trigger:` condition is genuinely met. When you do, pull it into active work or graduate it (into a GitHub issue, or a cross-repo `request`/`deliver` handoff), then set that item's `Status: superseded` with a `Companions:` pointer to where it went. Never silently work a parked item just because you saw it.
+
 ## Quick lookup — Status enum
 
 | Status | Meaning | Should I act? |
@@ -46,6 +50,7 @@ This repo participates in the cross-repo `handoff` convention (canonical spec: [
 | `applied` | Work landed in receiving repo | No — past terminal |
 | `archived` | Settled, transient copies deleted | No — past terminal |
 | `superseded` | Replaced by a newer handoff | No — follow `Companions: superseded-by` |
+| `parked` | Internal deferred idea, awaiting its `Trigger:` | No — act only on Trigger or human direction |
 
 ## Quick lookup — Direction enum
 
@@ -53,3 +58,4 @@ This repo participates in the cross-repo `handoff` convention (canonical spec: [
 |---|---|---|
 | `request` | Consumer (this repo, requesting from a producer) | `<consumer>/handoffs/HANDOFF_<topic>.md` |
 | `deliver` | Producer (another repo, delivering to consumer) | `<consumer>/handoffs/<YYYY-MM-DD>_<topic>.md` |
+| `internal` | This repo (handoff to a future session of itself) | `handoffs/parkinglot.md`, `handoffs/long-term-parking.md` |
