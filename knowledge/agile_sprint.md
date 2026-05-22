@@ -225,6 +225,36 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 ---
 
+## Sprint 7 — CONVENTION v0.5 (internal handoffs / parking lots) 🅿️
+
+**Goal:** Add a third handoff direction for context that crosses a *session* boundary rather than a repo boundary — a handoff to a future session of the same repo. Formalize the parking-lot pattern that emerged in canvas-toolbox.
+
+**Deliverable:** `CONVENTION.md` v0.5 (adds `Direction: internal`, `Status: parked`, and an "Internal handoffs (self-directed parking lots)" section) + two seeded files `handoffs/parkinglot.md` and `handoffs/long-term-parking.md` + a 7th `AGENTS_snippet.md` recognition rule.
+
+**Status:** Complete ✅
+
+| # | Story | Size | Status | Commit |
+|---|---|---|---|---|
+| #12 | `parkinglot.md` convention for per-repo internal deferred-work tracking | M | `[x]` | 61896b0 |
+
+**Work order:** Single deliverable commit (61896b0) for spec + snippet + both seed files + AGENTS.md, then this marker commit referencing it (two-commit pattern per v0.4 authoring guidance — no `--amend` self-reference).
+
+**Design decisions made:**
+
+- **Two files, split by ripeness, not date.** `parkinglot.md` = near-term, capacity-gated ("busy now"); `long-term-parking.md` = far/someday, evidence-gated. The user's redefinition mid-design replaced an earlier dated-session-snapshot idea — the active sprint/roadmap state stays in `agile_sprint.md`, so the two parking files are purely the *deferred* tiers of the backlog.
+- **`internal` is a real `Direction` value** (not "no Direction" and not a special-case): a self-handoff *is* a handoff, so it declares a Direction like every other doc. Resolved the "sentinel vs absent" fork in favor of an explicit value.
+- **`Trigger:` is the load-bearing field** — it's what makes a parking lot ≠ a TODO list (items are condition-gated = Definition of Ready). `Routes-to:` records the graduation destination (active-work | issue | handoff).
+- **Melting-pot framing**, agile-forward: agile gives the structure (backlog tiers, refinement, DoR/DoD, retro origin of the "parking lot"); lean/Kaizen gives the restraint (JIT pull, muda avoidance — no fake-WIP inventory); TBP is the problem-solving engine an item enters once triggered; genchi genbutsu grounds triggers in observed need. Deliberately kept OUT: story points, velocity, burndown. Kept IN: "atomic story, not epic."
+- **Refinement = backlog grooming**, run as a lean Check-Act review on each `agile_sprint.md` close; `parkinglot.md` churns fast, `long-term-parking.md` churns slow (reviewed for "has evidence arrived?"). Files carry a `Last-refined:` date.
+- **Seeded with real deferred work, not padding** (Sprint 4 "real > complete" lesson): `bootstrap_tooling.sh` moved out of AGENTS.md Active Context into `long-term-parking.md` (its proper home); the `handoff_status_check.sh` validator parked near-term.
+
+**Lessons:**
+
+- The design converged through several reframes (kanban → lean → agile-melting-pot → corrected file semantics). Letting the framing settle *before* writing the spec — rather than coding the first proposal — kept the schema cost minimal (two enum values + one section) for a conceptually large addition.
+- v0.5 is the first **non-additive-in-spirit** extension: it widens what "handoff" *means* (session boundary, not just repo boundary). Held the line on backward compatibility — existing `request`/`deliver` docs and consumers are untouched.
+
+---
+
 ## Completed Sprints (rollup)
 
 | Sprint | Deliverable | Stories closed | Final commit |
@@ -237,6 +267,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 4 — Examples | examples/README.md linking to real handoffs in this repo | #2 | 4ab910e |
 | 5 — Public Launch Prep | README.md + templates/ × 4 + LICENSE (CC0) + tag v0.3 | (no GH stories — non-story items) | 039e7e8 |
 | 6 — CONVENTION v0.4 | _temp apply procedure + commit-hash authoring guidance | #10, #11 | 5e9452d |
+| 7 — CONVENTION v0.5 | internal handoffs (parkinglot.md + long-term-parking.md) | #12 | 61896b0 |
 
 ---
 
