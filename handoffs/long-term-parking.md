@@ -4,7 +4,7 @@
 **Direction:** internal
 **Status:** parked
 **Purpose:** Far-horizon parked ideas for the `handoff` repo — versions-ahead, evidence-gated, someday-maybe, pie-in-the-sky. Each item is gated by external conditions (a use case, adoption evidence, an upstream change), not by current capacity. NOT a roadmap and NOT next-work. See `CONVENTION.md` → Internal handoffs. Reviewed occasionally for "has the evidence arrived yet?"
-**Last-refined:** 2026-05-22
+**Last-refined:** 2026-05-28
 
 ---
 
@@ -38,3 +38,25 @@ An idempotent script that installs the local tooling clones (`Make-AI-Agents`, `
 **Origin-Commit:** e3df2b6
 
 Open question: should the convention *require* a consumer repo to carry the `AGENTS_snippet.md` recognition rules (and/or an `AGENTS.md` reference) rather than treating it as recommended? Evidence-gated — this should be decided from how real consumers actually adopt the snippet, not in the abstract. Until there are several real consumers to learn from, requiring it is premature.
+
+---
+
+### Hermes Kanban v1 spec as multi-agent coordination reference
+
+**Trigger:** when the handoff convention needs to address multi-*agent* coordination (orchestrator + specialist roster + cross-profile collaboration patterns) — not just multi-*repo* coordination, which the current convention covers
+**Routes-to:** convention update
+**Added:** 2026-05-28
+**Origin-Commit:** dbf8bc0
+
+Nous Research's `hermes-agent` repo ships a 33-page design spec at `docs/hermes-kanban-v1-spec.pdf` (April 2026, design only — no implementation). Three pieces are well-articulated prior art if the convention ever extends from cross-repo to cross-agent handoffs: (a) eight reusable collaboration patterns — Fan-out, Pipeline, Voting/Quorum, Long-running journal, Human-in-the-loop triage, `@mention` delegation, Thread-scoped workspace, Fleet farming; (b) a first-class **orchestrator-profile** pattern with the "disabled execution toolsets" anti-temptation mechanism, fixing the canonical failure mode *"my orchestrator does the work itself instead of routing it"*; (c) the three-plane separation (control / state / execution) with **"no in-process subagent swarms"** as a load-bearing invariant. Evidence-gated: no action until the convention faces a real multi-agent design question. Reference, not roadmap.
+
+---
+
+### `agentskills.io` as parallel open standard for portable markdown skill artifacts
+
+**Trigger:** if cross-tool portability of handoff docs themselves ever becomes a concern (i.e. handoff docs need to be loadable into `agentskills.io`-compliant runtimes like Hermes / OpenClaw, not just read in dev tools)
+**Routes-to:** convention update *or* decline
+**Added:** 2026-05-28
+**Origin-Commit:** dbf8bc0
+
+The `agentskills.io` open standard defines a YAML-frontmatter format for portable markdown skills (used by Hermes; adopted by OpenClaw via migration). Make-AI-Agents specs are candidates for adopting it layered over their existing `.json` sidecar (`make_*.md` files). The handoff convention is **NOT a candidate by current design**: `CONVENTION.md` explicitly chose **bold-labeled metadata over YAML frontmatter** because bold labels render inline in GitHub/IDE previews without requiring a frontmatter parser. This entry exists to record that the parallel standard exists and was considered — so a future reader doesn't propose adopting it without rediscovering the rationale. Unless the deliberate "no parser required" decision is revisited under new pressure, no action.
