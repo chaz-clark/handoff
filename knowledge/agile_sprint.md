@@ -1,3 +1,14 @@
+---
+name: agile_sprint
+description: Sprint planning and tracking for handoff convention repo
+version: "0.5"
+last_updated: 2026-05-22
+sprints_completed: 7
+current_convention_version: "0.5"
+used_by: gh_issues_agent
+purpose: Tracks active and completed sprints; read by gh_issues_agent workflow step 1 to find next story
+---
+
 # Handoff — Agile Sprint Plan
 
 Tracks active and completed sprints for the `handoff` convention repo. Updated when stories close on GitHub and the closing commit lands on `main`. Each sprint maps to a discrete deliverable — usually a version of `CONVENTION.md`, occasionally a new artifact (REPO_CARD.md, examples/).

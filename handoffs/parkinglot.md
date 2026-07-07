@@ -14,5 +14,6 @@
 **Routes-to:** issue
 **Added:** 2026-05-22
 **Origin-Commit:** e3df2b6
+**Tracked-in-Linear:** CHA-10 (https://linear.app/chaz-clark/issue/CHA-10) — the *doing* lives in Linear; this entry stays the design/trigger rationale.
 
 A small shell validator that confirms every doc in `handoffs/` has the required metadata fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens (already sketched in `CONVENTION.md` → Tooling implications). Deferred only because the spec work is the current focus and the `handoffs/` set is still small enough to eyeball. Good first script once tooling becomes the active workstream.
