@@ -194,14 +194,14 @@ handoff/
 ├── README.md                   ← this repo's pitch + quickstart
 ├── CONVENTION.md               ← the formal rules (the "spec" of the convention)
 ├── templates/
-│   ├── contract_change.md      ← "I need this field added to your schema"
-│   ├── feature_request.md      ← "I need this capability"
-│   ├── bug_handoff.md          ← "I hit something you need to fix"
-│   └── design_proposal.md      ← "Here's a change worth considering"
+│   ├── contract-change.md      ← "I need this field added to your schema"
+│   ├── feature-request.md      ← "I need this capability"
+│   ├── bug-handoff.md          ← "I hit something you need to fix"
+│   └── design-proposal.md      ← "Here's a change worth considering"
 ├── examples/
 │   └── agentj_to_make_ai_agents_folder_io.md
 │       ← the real-world handoff that motivated this repo
-├── AGENTS_snippet.md           ← a snippet to drop into a consuming repo's
+├── AGENTS-snippet.md           ← a snippet to drop into a consuming repo's
 │                                  AGENTS.md teaching agents about the convention
 └── LICENSE                     ← MIT or CC0 — wide-open since it's a convention
 ```

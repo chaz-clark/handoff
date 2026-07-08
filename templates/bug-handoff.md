@@ -1,5 +1,5 @@
 <!--
-Template — bug_handoff
+Template — bug-handoff
 Use when: a bug surfaces in the producer's repo BUT the reproduction or design
 context lives in YOUR repo and won't fit in a GitHub issue body.
 

@@ -21,15 +21,15 @@ A tool-agnostic convention for cross-repo design coordination via markdown files
 ```
 handoff/
 ├── AGENTS.md             # this file — project context for any agentic tool
-├── AGENTS_snippet.md     # paste-into-consumer-AGENTS.md snippet teaching the handoff convention to receiving agents
-├── CONVENTION.md         # the formal spec (Direction inc. internal, Status inc. parked, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS_snippet, internal handoffs)
+├── AGENTS-snippet.md     # paste-into-consumer-AGENTS.md snippet teaching the handoff convention to receiving agents
+├── CONVENTION.md         # the formal spec (Direction inc. internal, Status inc. parked, metadata header, lifecycle, filename conventions, REPO_CARD, AGENTS-snippet, internal handoffs)
 ├── LICENSE               # CC0 1.0 Universal — public-domain dedication
 ├── README.md             # public pitch + quickstart for consumers
-├── archive/              # origin / historical docs (currently: SEED_CONTEXT.md, kept as provenance after README superseded it)
+├── archive/              # origin / historical docs (currently: SEED-CONTEXT.md, kept as provenance after README superseded it)
 ├── examples/             # README pointing at real-world handoffs in this repo (currently: 1 deliver-direction example)
 ├── handoffs/             # canonical record of handoffs for this repo: the 2026-05-13 Make-AI-Agents deliver (applied) + the two internal parking lots (parkinglot.md, long-term-parking.md)
-├── knowledge/            # local state for tooling (currently: agile_sprint.md for the gh_issues_agent skill workflow)
-├── templates/            # 4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal
+├── knowledge/            # local state for tooling (currently: agile-sprint.md for the gh_issues_agent skill workflow)
+├── templates/            # 4 scaffolds: contract-change, feature-request, bug-handoff, design-proposal
 ├── .gitignore            # ignores Make-AI-Agents/ and gh-issues-agent/ (local-only tooling clones)
 └── .gitattributes
 ```
@@ -53,11 +53,11 @@ This project follows the behavioral discipline defined in `Make-AI-Agents/knowle
 
 _Last updated: 2026-05-22_
 
-- Convention is feature-complete at v0.5: `CONVENTION.md` codifies the full schema (Direction `request`/`deliver`/`internal`, Status incl. `parked`, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS_snippet receiving-agent prefix) plus v0.4 authoring guidance (`_temp`-as-working-copy apply, two-commit pattern) and v0.5 **internal handoffs** (self-directed parking lots — `handoffs/parkinglot.md` near-term + `handoffs/long-term-parking.md` someday, `Trigger:`-gated). Paste-ready `AGENTS_snippet.md` (now 7 rules) lives at root; `templates/` holds 4 scaffolds; `examples/` seeded with one real-world `deliver` example; `README.md` published; `LICENSE` is CC0 1.0. All 9 founding stories + 3 enhancement issues (#10, #11, #12) closed.
+- Convention is feature-complete at v0.5: `CONVENTION.md` codifies the full schema (Direction `request`/`deliver`/`internal`, Status incl. `parked`, metadata header, Sensitivity, Companions, REPO_CARD producer surface, AGENTS-snippet receiving-agent prefix) plus v0.4 authoring guidance (`_temp`-as-working-copy apply, two-commit pattern) and v0.5 **internal handoffs** (self-directed parking lots — `handoffs/parkinglot.md` near-term + `handoffs/long-term-parking.md` someday, `Trigger:`-gated). Paste-ready `AGENTS-snippet.md` (now 7 rules) lives at root; `templates/` holds 4 scaffolds; `examples/` seeded with one real-world `deliver` example; `README.md` published; `LICENSE` is CC0 1.0. All 9 founding stories + 3 enhancement issues (#10, #11, #12) closed.
 - `Make-AI-Agents/` and `gh-issues-agent/` are gitignored local clones (each has its own `.git`) so the `make_AGENTS` / `make_AGENTS_qc` and `gh_issues_agent` skills are available in this working directory. Refresh via `git pull` inside each folder; never committed or pushed from this repo.
 - **Deferred work now lives in the parking lots** (v0.5 dogfood): the old `bootstrap_tooling.sh` parked-idea bullet moved to `handoffs/long-term-parking.md`; near-term ideas (e.g. a `handoff_status_check.sh` validator) live in `handoffs/parkinglot.md`. Review them at each sprint close (backlog refinement) and bump their `Last-refined:` date.
 - **Next steps**: tag `v0.5` lands with this sprint. No active sprint work beyond that — convention is feature-complete. Dogfood is **already happening** in consumer repos (bugs surface as GitHub issues filed here via the `gh_issues_agent` skill running there — genchi genbutsu). `examples/` grows organically as new real handoffs land (see `examples/README.md` → "Adding new examples").
-- **Open design questions** (from `archive/SEED_CONTEXT.md` → "Open questions"; ~~license choice~~ → resolved as CC0): whether examples use real repo names (lean: yes); whether to add a small ack/archive script. (The "require `AGENTS_snippet`/`AGENTS.md` reference in consumers?" question now sits in `handoffs/long-term-parking.md`, evidence-gated.)
+- **Open design questions** (from `archive/SEED-CONTEXT.md` → "Open questions"; ~~license choice~~ → resolved as CC0): whether examples use real repo names (lean: yes); whether to add a small ack/archive script. (The "require `AGENTS-snippet`/`AGENTS.md` reference in consumers?" question now sits in `handoffs/long-term-parking.md`, evidence-gated.)
 
 ## Domain Terms
 

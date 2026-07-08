@@ -1,5 +1,5 @@
 ---
-name: agile_sprint
+name: agile-sprint
 description: Sprint planning and tracking for handoff convention repo
 version: "0.5"
 last_updated: 2026-05-22
@@ -51,8 +51,8 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 **Untracked housekeeping** (no GitHub issue; same session):
 
-- Initial seed commit: AGENTS.md, SEED_CONTEXT.md, .gitignore (0449c10)
-- Move SEED_CONTEXT.md → archive/, drop stale Active Context bullet (540014a)
+- Initial seed commit: AGENTS.md, SEED-CONTEXT.md, .gitignore (0449c10)
+- Move SEED-CONTEXT.md → archive/, drop stale Active Context bullet (540014a)
 - Match gh-issues-agent folder + gitignore to upstream repo rename (37b3885)
 - Gitignore .github_issues/ (gh_issues_agent skill local output) (c9c2b5f)
 
@@ -115,41 +115,41 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 **Status:** Complete ✅
 
-**Note: no GitHub story.** This work arrived as a `deliver` handoff from `Make-AI-Agents`, not via the issue tracker. The handoff doc (`handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md`) is the canonical record.
+**Note: no GitHub story.** This work arrived as a `deliver` handoff from `Make-AI-Agents`, not via the issue tracker. The handoff doc (`handoffs/2026-05-13_AGENTS-md-v3-6-upgrade.md`) is the canonical record.
 
 | Source | Detail | Status | Commit |
 |---|---|---|---|
-| Handoff: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md` | Rewrite Working Style pointer from `knowledge/behavioral_discipline.md` (broken local resolve) → `Make-AI-Agents/knowledge/behavioral_discipline.md` (resolves via clone) | `[x]` | 3a74db5 |
+| Handoff: `handoffs/2026-05-13_AGENTS-md-v3-6-upgrade.md` | Rewrite Working Style pointer from `knowledge/behavioral_discipline.md` (broken local resolve) → `Make-AI-Agents/knowledge/behavioral_discipline.md` (resolves via clone) | `[x]` | 3a74db5 |
 
 **Lessons:**
 
 - First applied `deliver` handoff using our own CONVENTION v0.2 lifecycle (dogfood).
 - Producer's `AGENTS_updated.md` was generated from an earlier snapshot of `handoff/AGENTS.md` and didn't include in-flight changes (the `knowledge/` Structure tree addition). A straight `mv AGENTS_updated.md AGENTS.md` would have lost the in-flight work. Manual surgical merge via an `AGENTS_temp.md` working copy was the right move.
-- The `_temp`-as-working-copy pattern is worth naming as the canonical apply procedure when a delivered handoff competes with local in-flight changes — codify it in CONVENTION v0.3 when REPO_CARD/AGENTS_snippet land.
+- The `_temp`-as-working-copy pattern is worth naming as the canonical apply procedure when a delivered handoff competes with local in-flight changes — codify it in CONVENTION v0.3 when REPO_CARD/AGENTS-snippet land.
 
 ---
 
-## Sprint 3 — Producer Surface (REPO_CARD + AGENTS_snippet) 🪪
+## Sprint 3 — Producer Surface (REPO_CARD + AGENTS-snippet) 🪪
 
 **Goal:** Capability surface so consumers know what a producer accepts before authoring; receiving-agent prompt prefix so agents recognize handoff docs as a structured kind, not prose.
 
-**Deliverable:** `CONVENTION.md` v0.3 (adds REPO_CARD + AGENTS_snippet sections) + new file `handoff/AGENTS_snippet.md` as the paste-ready snippet.
+**Deliverable:** `CONVENTION.md` v0.3 (adds REPO_CARD + AGENTS-snippet sections) + new file `handoff/AGENTS-snippet.md` as the paste-ready snippet.
 
 **Status:** Complete ✅
 
 | # | Story | Size | Status | Commit |
 |---|---|---|---|---|
 | #5 | Adopt AgentCard-equivalent REPO_CARD.md for producer capability surface | M–L | `[x]` | 7b52a50 |
-| #7 | Specify AGENTS_snippet.md content — handoff RECOMMENDED_PROMPT_PREFIX equivalent | M | `[x]` | 7b52a50 |
+| #7 | Specify AGENTS-snippet.md content — handoff RECOMMENDED_PROMPT_PREFIX equivalent | M | `[x]` | 7b52a50 |
 
-**Work order:** Both bundled — REPO_CARD is the surface; AGENTS_snippet teaches consumers to read it. Authoring them together let the snippet's sixth rule cite REPO_CARD concretely instead of as a placeholder.
+**Work order:** Both bundled — REPO_CARD is the surface; AGENTS-snippet teaches consumers to read it. Authoring them together let the snippet's sixth rule cite REPO_CARD concretely instead of as a placeholder.
 
 **Design decisions made:**
 
 - REPO_CARD format: bold-labeled `.md` (canonical), with `.handoff-card.json` documented as an optional alternative for repos that prefer JSON.
 - REPO_CARD `Status` enum: `accepting / freeze / archived` (three values; sufficient to cover the lifecycle states a producer surface needs).
-- AGENTS_snippet length: kept short (~55 lines) so consumers can paste without bloating their `AGENTS.md`. Authored as a real usable file at handoff root, not just a spec.
-- AGENTS_snippet semantic count: six rules (the five from issue #7 + a sixth for REPO_CARD pre-check on outbound authoring, naturally added when bundling #5 and #7 together).
+- AGENTS-snippet length: kept short (~55 lines) so consumers can paste without bloating their `AGENTS.md`. Authored as a real usable file at handoff root, not just a spec.
+- AGENTS-snippet semantic count: six rules (the five from issue #7 + a sixth for REPO_CARD pre-check on outbound authoring, naturally added when bundling #5 and #7 together).
 
 ---
 
@@ -168,7 +168,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 **Design decisions made:**
 
 - Strategy: **link, don't copy** — `examples/README.md` points at canonical docs in `handoffs/` rather than duplicating files. Avoids drift; one source of truth per handoff.
-- Seeded with the one real-world handoff that exists locally in this repo: `handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md` (`deliver` direction, applied during Sprint 2.5).
+- Seeded with the one real-world handoff that exists locally in this repo: `handoffs/2026-05-13_AGENTS-md-v3-6-upgrade.md` (`deliver` direction, applied during Sprint 2.5).
 - `request`-direction example marked as pending until a real `request` handoff is authored from/to this repo. Sprint 4 deliberately did NOT fabricate a synthetic example — real > complete.
 - The originally-named external examples (canvas-toolbox handoffs, AGENTJ_HANDOFF_*) are out of scope per the project rule: this repo concerns itself with its own state only.
 
@@ -190,14 +190,14 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 | Source | Detail | Status | Commit |
 |---|---|---|---|
-| Next-step item 1 | `README.md` — public pitch + quickstart (clone-and-gitignore adoption, AGENTS_snippet paste, link to spec/templates/examples) | `[x]` | 039e7e8 |
-| Next-step item 2 | `templates/` × 4 (contract_change, feature_request, bug_handoff, design_proposal) pre-filled with v0.3 metadata header | `[x]` | 039e7e8 |
+| Next-step item 1 | `README.md` — public pitch + quickstart (clone-and-gitignore adoption, AGENTS-snippet paste, link to spec/templates/examples) | `[x]` | 039e7e8 |
+| Next-step item 2 | `templates/` × 4 (contract-change, feature-request, bug-handoff, design-proposal) pre-filled with v0.3 metadata header | `[x]` | 039e7e8 |
 | Next-step item 3 | `LICENSE` — CC0 1.0 Universal | `[x]` | 039e7e8 |
 | Next-step item 4 | git tag `v0.3` | `[x]` | (tag — points at 039e7e8) |
 
 **Design decisions made:**
 
-- LICENSE: CC0 over MIT. Convention adoption pattern (clone the spec, paste the snippet) benefits from zero attribution friction; MIT would require attribution in every consumer that embeds AGENTS_snippet.
+- LICENSE: CC0 over MIT. Convention adoption pattern (clone the spec, paste the snippet) benefits from zero attribution friction; MIT would require attribution in every consumer that embeds AGENTS-snippet.
 - Template direction: all 4 templates default to `Direction: request` since they're consumer-initiates flows. `deliver`-direction handoffs are producer-authored and template less well — adapt one of the 4 if needed.
 - README scope: kept under 70 lines. Lands the pitch, the quickstart, and the layout map; depth lives in `CONVENTION.md`.
 - Tag granularity: single `v0.3` covering the full feature-complete state (Sprints 0–5). Did not retro-tag v0.1 and v0.2; the commit history is the audit trail.
@@ -240,7 +240,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 **Goal:** Add a third handoff direction for context that crosses a *session* boundary rather than a repo boundary — a handoff to a future session of the same repo. Formalize the parking-lot pattern that emerged in canvas-toolbox.
 
-**Deliverable:** `CONVENTION.md` v0.5 (adds `Direction: internal`, `Status: parked`, and an "Internal handoffs (self-directed parking lots)" section) + two seeded files `handoffs/parkinglot.md` and `handoffs/long-term-parking.md` + a 7th `AGENTS_snippet.md` recognition rule.
+**Deliverable:** `CONVENTION.md` v0.5 (adds `Direction: internal`, `Status: parked`, and an "Internal handoffs (self-directed parking lots)" section) + two seeded files `handoffs/parkinglot.md` and `handoffs/long-term-parking.md` + a 7th `AGENTS-snippet.md` recognition rule.
 
 **Status:** Complete ✅
 
@@ -252,11 +252,11 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 **Design decisions made:**
 
-- **Two files, split by ripeness, not date.** `parkinglot.md` = near-term, capacity-gated ("busy now"); `long-term-parking.md` = far/someday, evidence-gated. The user's redefinition mid-design replaced an earlier dated-session-snapshot idea — the active sprint/roadmap state stays in `agile_sprint.md`, so the two parking files are purely the *deferred* tiers of the backlog.
+- **Two files, split by ripeness, not date.** `parkinglot.md` = near-term, capacity-gated ("busy now"); `long-term-parking.md` = far/someday, evidence-gated. The user's redefinition mid-design replaced an earlier dated-session-snapshot idea — the active sprint/roadmap state stays in `agile-sprint.md`, so the two parking files are purely the *deferred* tiers of the backlog.
 - **`internal` is a real `Direction` value** (not "no Direction" and not a special-case): a self-handoff *is* a handoff, so it declares a Direction like every other doc. Resolved the "sentinel vs absent" fork in favor of an explicit value.
 - **`Trigger:` is the load-bearing field** — it's what makes a parking lot ≠ a TODO list (items are condition-gated = Definition of Ready). `Routes-to:` records the graduation destination (active-work | issue | handoff).
 - **Melting-pot framing**, agile-forward: agile gives the structure (backlog tiers, refinement, DoR/DoD, retro origin of the "parking lot"); lean/Kaizen gives the restraint (JIT pull, muda avoidance — no fake-WIP inventory); TBP is the problem-solving engine an item enters once triggered; genchi genbutsu grounds triggers in observed need. Deliberately kept OUT: story points, velocity, burndown. Kept IN: "atomic story, not epic."
-- **Refinement = backlog grooming**, run as a lean Check-Act review on each `agile_sprint.md` close; `parkinglot.md` churns fast, `long-term-parking.md` churns slow (reviewed for "has evidence arrived?"). Files carry a `Last-refined:` date.
+- **Refinement = backlog grooming**, run as a lean Check-Act review on each `agile-sprint.md` close; `parkinglot.md` churns fast, `long-term-parking.md` churns slow (reviewed for "has evidence arrived?"). Files carry a `Last-refined:` date.
 - **Seeded with real deferred work, not padding** (Sprint 4 "real > complete" lesson): `bootstrap_tooling.sh` moved out of AGENTS.md Active Context into `long-term-parking.md` (its proper home); the `handoff_status_check.sh` validator parked near-term.
 
 **Lessons:**
@@ -274,7 +274,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 | 1 — CONVENTION v0.1 | Direction/Status/Metadata schema | #3, #4, #6 | 3f6edb3 |
 | 2 — CONVENTION v0.2 | Sensitivity + Companions | #8, #9 | d805cc8 |
 | 2.5 — AGENTS.md Discipline Pointer Fix | Working Style pointer rewrite | (delivered via handoff, no GH story) | 3a74db5 |
-| 3 — Producer Surface | REPO_CARD spec + AGENTS_snippet.md | #5, #7 | 7b52a50 |
+| 3 — Producer Surface | REPO_CARD spec + AGENTS-snippet.md | #5, #7 | 7b52a50 |
 | 4 — Examples | examples/README.md linking to real handoffs in this repo | #2 | 4ab910e |
 | 5 — Public Launch Prep | README.md + templates/ × 4 + LICENSE (CC0) + tag v0.3 | (no GH stories — non-story items) | 039e7e8 |
 | 6 — CONVENTION v0.4 | _temp apply procedure + commit-hash authoring guidance | #10, #11 | 5e9452d |
@@ -284,7 +284,7 @@ If a finding doesn't fit handoff's own design scope, route it via one of the oth
 
 ## Open Design Questions (tracked elsewhere)
 
-These live in `archive/SEED_CONTEXT.md` → "Open questions" and `AGENTS.md` Active Context, not as GitHub stories:
+These live in `archive/SEED-CONTEXT.md` → "Open questions" and `AGENTS.md` Active Context, not as GitHub stories:
 
 - License choice (MIT vs CC0)
 - Whether the convention should *require* an `AGENTS.md` reference in consumer repos

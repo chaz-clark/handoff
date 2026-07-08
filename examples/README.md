@@ -8,7 +8,7 @@ Examples are linked, not copied — the canonical doc is the single source of tr
 
 ## `deliver` direction
 
-### [`handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md`](../handoffs/2026-05-13_AGENTS_md_v3.6_upgrade.md)
+### [`handoffs/2026-05-13_AGENTS-md-v3-6-upgrade.md`](../handoffs/2026-05-13_AGENTS-md-v3-6-upgrade.md)
 
 **What:** Applied `deliver`-direction handoff from `Make-AI-Agents` to `handoff`. Make-AI-Agents authored a one-paragraph rewrite of this repo's `AGENTS.md` Working Style discipline pointer (from a broken local-path reference to the resolving clone-path reference) and delivered it via the canonical `deliver` lifecycle.
 

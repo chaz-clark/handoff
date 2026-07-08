@@ -27,7 +27,7 @@ Both flows coexist. The full decision heuristic is in [`CONVENTION.md`](CONVENTI
 
 2. **Refresh later via** `git -C handoff pull`.
 
-3. **Paste [`handoff/AGENTS_snippet.md`](AGENTS_snippet.md) into your repo's `AGENTS.md`** (Working Style section). This teaches any agent operating in your repo how to recognize handoff docs.
+3. **Paste [`handoff/AGENTS-snippet.md`](AGENTS-snippet.md) into your repo's `AGENTS.md`** (Working Style section). This teaches any agent operating in your repo how to recognize handoff docs.
 
 4. **Optionally publish a [`REPO_CARD.md`](CONVENTION.md#repo_cardmd-producer-capability-surface) at your repo root** if your repo is a producer (i.e., other repos send handoffs to you). The card declares what handoff types you accept, your current `Status` (accepting / freeze / archived), and where to drop handoffs.
 
@@ -38,9 +38,9 @@ Both flows coexist. The full decision heuristic is in [`CONVENTION.md`](CONVENTI
 | Path | Role |
 |---|---|
 | [`AGENTS.md`](AGENTS.md) | Project context for any agentic tool entering this repo |
-| [`AGENTS_snippet.md`](AGENTS_snippet.md) | Paste-into-consumer-AGENTS.md snippet (6 recognition rules) |
-| [`CONVENTION.md`](CONVENTION.md) | The formal spec (Direction, Status, metadata header, lifecycle, REPO_CARD, AGENTS_snippet) |
-| [`templates/`](templates/) | 4 scaffolds: contract_change, feature_request, bug_handoff, design_proposal |
+| [`AGENTS-snippet.md`](AGENTS-snippet.md) | Paste-into-consumer-AGENTS.md snippet (6 recognition rules) |
+| [`CONVENTION.md`](CONVENTION.md) | The formal spec (Direction, Status, metadata header, lifecycle, REPO_CARD, AGENTS-snippet) |
+| [`templates/`](templates/) | 4 scaffolds: contract-change, feature-request, bug-handoff, design-proposal |
 | [`examples/`](examples/) | Real-world handoffs in this repo annotated against the spec |
 | [`handoffs/`](handoffs/) | Canonical record of handoffs received here (this repo eats its own dog food) |
 | [`archive/`](archive/) | Origin / historical docs |
@@ -55,7 +55,7 @@ This is a convention, not code. The most useful contributions are:
 
 ## Convention history
 
-Authored 2026-04 → 2026-05-13. Schema is feature-complete relative to the founding issues #1–9. See [`knowledge/agile_sprint.md`](knowledge/agile_sprint.md) for the sprint log and [`archive/SEED_CONTEXT.md`](archive/SEED_CONTEXT.md) for the origin notes.
+Authored 2026-04 → 2026-05-13. Schema is feature-complete relative to the founding issues #1–9. See [`knowledge/agile-sprint.md`](knowledge/agile-sprint.md) for the sprint log and [`archive/SEED-CONTEXT.md`](archive/SEED-CONTEXT.md) for the origin notes.
 
 ## License
 

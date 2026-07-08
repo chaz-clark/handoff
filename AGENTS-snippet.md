@@ -1,8 +1,8 @@
-# AGENTS_snippet.md — Handoff Convention Recognition
+# AGENTS-snippet.md — Handoff Convention Recognition
 
 Paste this snippet (or a paraphrase preserving the seven recognition rules) into your repo's `AGENTS.md` — Working Style section, or any load-on-startup location. Each consumer repo may customize phrasing; the seven rules below should remain semantically intact.
 
-The canonical version lives at `handoff/AGENTS_snippet.md` in the `handoff` clone. Refresh it (and your paste) when `CONVENTION.md` versions up.
+The canonical version lives at `handoff/AGENTS-snippet.md` in the `handoff` clone. Refresh it (and your paste) when `CONVENTION.md` versions up.
 
 ---
 

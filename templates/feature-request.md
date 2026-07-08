@@ -1,5 +1,5 @@
 <!--
-Template — feature_request handoff
+Template — feature-request handoff
 Use when: your repo needs another repo to add a feature it doesn't currently have,
 and the rationale lives in your repo's design (not the producer's bug tracker).
 

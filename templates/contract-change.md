@@ -1,5 +1,5 @@
 <!--
-Template — contract_change handoff
+Template — contract-change handoff
 Use when: your repo needs another repo to change a contract you both depend on
 (schema, return shape, function signature, file layout, config key, etc.).
 

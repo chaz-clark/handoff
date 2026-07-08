@@ -1,10 +1,10 @@
 <!--
-Template — design_proposal handoff
+Template — design-proposal handoff
 Use when: you want to propose a design across repo boundaries, or surface a design
 choice the producer needs to make where the rationale spans both repos.
 
-Differs from feature_request in tone — this is "let's talk through it" rather than
-"please ship this." Often the prelude to a feature_request or contract_change handoff.
+Differs from feature-request in tone — this is "let's talk through it" rather than
+"please ship this." Often the prelude to a feature-request or contract-change handoff.
 
 Fill in the placeholders below, then DELETE this comment block.
 See CONVENTION.md → Required Metadata Header for field semantics.
@@ -53,7 +53,7 @@ See CONVENTION.md → Required Metadata Header for field semantics.
 
 ## What a follow-up would look like
 
-<If this proposal converges, what's the next concrete step? Often this is a `contract_change` or `feature_request` handoff with specifics.>
+<If this proposal converges, what's the next concrete step? Often this is a `contract-change` or `feature-request` handoff with specifics.>
 
 ## Open questions for the producer
 

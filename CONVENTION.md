@@ -111,7 +111,7 @@ Internal handoffs live in **two durable files**, split by ripeness and what bloc
 | `handoffs/parkinglot.md` | Good ideas, not fully baked, deferred because you're busy now | Your attention (capacity) | `next sprint`, `when the current workstream ships` |
 | `handoffs/long-term-parking.md` | Versions-ahead, evidence-gated, someday-maybe, pie-in-the-sky | External conditions (evidence / use case / upstream) | `when N users hit this`, `when upstream reaches v2`, `if we ever need X` |
 
-Neither file holds **committed** work. The moment an item is scheduled or approved it *leaves* the parking lot and becomes active work, tracked in the repo's sprint/roadmap record (e.g. `knowledge/agile_sprint.md`). Keeping committed work out is what keeps these files honest — they are the deliberate "not now" pile, not a second backlog of next actions.
+Neither file holds **committed** work. The moment an item is scheduled or approved it *leaves* the parking lot and becomes active work, tracked in the repo's sprint/roadmap record (e.g. `knowledge/agile-sprint.md`). Keeping committed work out is what keeps these files honest — they are the deliberate "not now" pile, not a second backlog of next actions.
 
 ### The escalator
 
@@ -310,7 +310,7 @@ A consumer authoring a handoff should read the target producer's `REPO_CARD.md` 
 **Owner:** <GitHub handle, team, or `automated` if a bot applies handoffs>
 **Status:** accepting | freeze | archived
 **Drop-location:** <relative path where `request`-direction handoffs should be dropped; default `./` (repo root)>
-**Accepts-handoff-types:** <list of accepted types — see `templates/` names: contract_change, bug_handoff, feature_request, design_proposal>
+**Accepts-handoff-types:** <list of accepted types — see `templates/` names: contract-change, bug-handoff, feature-request, design-proposal>
 **Lifecycle-owner:** <who applies handoffs — usually the same as Owner, occasionally different (e.g., `automated` for a bot pipeline)>
 **Companion-files:**
 - <path> — <one-line note>
@@ -322,7 +322,7 @@ A consumer authoring a handoff should read the target producer's `REPO_CARD.md` 
 - **Owner** — concrete (`@chaz-clark`, `@team-foo`). `automated` is valid if a bot applies handoffs without human review.
 - **Status** — `accepting` (open), `freeze` (paused during a release or migration), `archived` (no longer maintained; handoffs go elsewhere).
 - **Drop-location** — relative path. Default `./` means "drop at repo root." A repo with an `incoming/` folder for queued work would set `Drop-location: incoming/`.
-- **Accepts-handoff-types** — template names from `templates/` (Sprint 4). A repo can decline some types (e.g., a stable spec repo might decline `feature_request` but accept `contract_change`). Empty list = accepts nothing right now (often paired with `Status: freeze` or `archived`).
+- **Accepts-handoff-types** — template names from `templates/` (Sprint 4). A repo can decline some types (e.g., a stable spec repo might decline `feature-request` but accept `contract-change`). Empty list = accepts nothing right now (often paired with `Status: freeze` or `archived`).
 - **Lifecycle-owner** — who's responsible for moving Status `delivered → applying → applied`.
 - **Companion-files** — pointers to context the consumer should read alongside the card. Typically `AGENTS.md`, `CONVENTION.md`, repo-specific guides.
 
@@ -339,9 +339,9 @@ When `Status: freeze`, consumers hold handoffs and resume after the freeze lifts
 **Status:** accepting
 **Drop-location:** handoffs/
 **Accepts-handoff-types:**
-- contract_change
-- bug_handoff
-- design_proposal
+- contract-change
+- bug-handoff
+- design-proposal
 **Lifecycle-owner:** @chaz-clark
 **Companion-files:**
 - `AGENTS.md` — project context
@@ -359,11 +359,11 @@ Repos preferring JSON (e.g., automated pipelines, A2A-style consumption) may pub
 
 ---
 
-## AGENTS_snippet.md (receiving-agent prompt prefix)
+## AGENTS-snippet.md (receiving-agent prompt prefix)
 
 The handoff convention is only effective when receiving agents *recognize* handoff docs as a structured artifact with a lifecycle — not as conversation prose. Modeled on OpenAI Agents SDK's `RECOMMENDED_PROMPT_PREFIX` (`agents.extensions.handoff_prompt`), which exists because models without an explicit prefix narrate handoffs in prose ("I'll connect you to billing") instead of acting on them. The cross-repo handoff convention has the same vulnerability: without the prefix, an agent reading a dropped handoff doc may treat it as just-another-markdown.
 
-The canonical snippet lives at `handoff/AGENTS_snippet.md`. Consumers paste it (or a paraphrase preserving its semantics) into their own `AGENTS.md` (Working Style or any load-on-startup location).
+The canonical snippet lives at `handoff/AGENTS-snippet.md`. Consumers paste it (or a paraphrase preserving its semantics) into their own `AGENTS.md` (Working Style or any load-on-startup location).
 
 ### What the snippet teaches receiving agents
 
@@ -383,7 +383,7 @@ The canonical snippet lives at `handoff/AGENTS_snippet.md`. Consumers paste it (
 
 ### Update cadence
 
-When new `Direction`, `Status`, `Sensitivity`, or filename-pattern values are introduced in future CONVENTION versions, update `handoff/AGENTS_snippet.md` correspondingly so consumer agents recognize the new shapes.
+When new `Direction`, `Status`, `Sensitivity`, or filename-pattern values are introduced in future CONVENTION versions, update `handoff/AGENTS-snippet.md` correspondingly so consumer agents recognize the new shapes.
 
 ---
 
@@ -397,7 +397,7 @@ The v0.3 schema (carried into v0.4) enables:
 - **Sensitivity filtering** — `grep -L "Sensitivity:" handoffs/` finds docs that omitted the field; `grep -l "Sensitivity: restricted" handoffs/` finds ones flagged for handling care.
 - **Companions traversal** — chase chains of related handoffs (supersession, prerequisites, follow-ups) by following the bullet entries.
 - **REPO_CARD pre-check** — `cat <producer-root>/REPO_CARD.md` before authoring an outbound handoff confirms the producer accepts the type and is currently `accepting` (not `freeze` / `archived`).
-- **AGENTS_snippet adoption check** — a consumer's `AGENTS.md` either contains the snippet's seven recognition rules, or the consumer's receiving agent will mishandle handoff docs. `grep -q "handoff document recognition\|rules for handling a handoff" <consumer>/AGENTS.md` is a quick adoption probe.
+- **AGENTS-snippet adoption check** — a consumer's `AGENTS.md` either contains the snippet's seven recognition rules, or the consumer's receiving agent will mishandle handoff docs. `grep -q "handoff document recognition\|rules for handling a handoff" <consumer>/AGENTS.md` is a quick adoption probe.
 - **Parked-item hygiene** — `grep -c "^### " handoffs/long-term-parking.md` counts garage items; a file whose `Last-refined:` date is stale signals an overdue backlog-refinement pass.
 - **Validator scripts** — a future `handoff_status_check.sh` can validate that every doc in `handoffs/` has the required fields and valid enum values for `Status`, `Direction`, `Sensitivity`, and Companion `<relationship>` tokens. A `handoff_credential_scan.sh` could grep for common credential patterns (`sk-`, `AKIA`, `ghp_`, `Bearer `, etc.) and flag docs missing a `Sensitivity` declaration stricter than `standard`. A `repo_card_check.sh` could validate REPO_CARD.md's enum values and required fields.
 
@@ -409,7 +409,7 @@ No companion tooling is required for the convention to work; the schema is the c
 
 When a tracked file records "this sprint / handoff / lifecycle event completed at commit `<hash>`," the recording and the commit form a chicken-and-egg: you can't know the commit hash until you commit, and committing changes the hash. There are two clean ways to avoid the resulting wart:
 
-- **Prefer the two-commit pattern.** Land the actual work in commit **A**. Then commit the reference-recording file (with **A**'s hash filled in) as commit **B**. The two commits are clearly ordered; no hash ambiguity. This is the pattern Sprints 3, 4, and 5 used for `knowledge/agile_sprint.md` updates referencing their deliverable commits.
+- **Prefer the two-commit pattern.** Land the actual work in commit **A**. Then commit the reference-recording file (with **A**'s hash filled in) as commit **B**. The two commits are clearly ordered; no hash ambiguity. This is the pattern Sprints 3, 4, and 5 used for `knowledge/agile-sprint.md` updates referencing their deliverable commits.
 - **Avoid `git commit --amend` to fill commit-hash placeholders.** Amending rewrites the commit's hash, so the placeholder you just filled becomes stale — requiring yet another commit to fix. Sprint 2.5 hit this directly: `3515aed` → amended to `3a74db5` → backfill commit `9228151` to correct the now-stale reference.
 - **Acceptable alternative: use date-based references** instead of commit hashes (e.g., `**Applied:** 2026-05-13`). Dates don't self-reference. The trade-off is reduced precision — future readers must `git log --since=<date>` to find the exact commit, where a hash would identify it directly. Used in `Lifecycle marker` sections of handoff docs.
 
@@ -421,6 +421,6 @@ The same guidance applies to any markdown record that wants to cite the commit i
 
 The schema and lifecycle are grounded in existing agent-handoff precedent:
 
-- **OpenAI Agents SDK — Handoffs** ([docs](https://openai.github.io/openai-agents-python/handoffs/)): `HandoffInputData` provides a fixed-schema metadata structure for handoff transitions — informs the v0.1 Required Metadata Header. `RECOMMENDED_PROMPT_PREFIX` (in `agents.extensions.handoff_prompt`) is the direct precedent for v0.3's `AGENTS_snippet.md` — without it, agents narrate handoffs in prose instead of acting on them. `Direction: request` mirrors parent-initiates-transfer.
+- **OpenAI Agents SDK — Handoffs** ([docs](https://openai.github.io/openai-agents-python/handoffs/)): `HandoffInputData` provides a fixed-schema metadata structure for handoff transitions — informs the v0.1 Required Metadata Header. `RECOMMENDED_PROMPT_PREFIX` (in `agents.extensions.handoff_prompt`) is the direct precedent for v0.3's `AGENTS-snippet.md` — without it, agents narrate handoffs in prose instead of acting on them. `Direction: request` mirrors parent-initiates-transfer.
 - **Anthropic Claude Agent SDK — Subagents** ([docs](https://code.claude.com/docs/en/agent-sdk/subagents)): Subagent context isolation + `parent_tool_use_id` for traceability inform the `Origin-Commit` field. `Direction: deliver` mirrors subagent-result-returned-to-parent.
 - **Google ADK — A2A Protocol** ([intro](https://adk.dev/a2a/intro/), [consuming quickstart](https://adk.dev/a2a/quickstart-consuming/)): `AgentCard` at well-known path (`/.well-known/agent.json`) is the precedent for v0.3's `REPO_CARD.md` — a single-file capability declaration consumers can read before initiating a handoff.
