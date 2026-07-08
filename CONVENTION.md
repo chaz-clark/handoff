@@ -294,6 +294,17 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 
 `<CONSUMER>` and `<PRODUCER>` are the repo names in capitalized form (e.g., `AGENTJ`, `CANVAS-TOOLBOX`). `<topic>` is kebab-case and matches the `Topic:` field in the metadata header. The two `internal` filenames are fixed (one of each per repo, not per-topic) — they are multi-item files, not one-handoff-per-file.
 
+### File type conventions
+
+This convention specifies **kebab-case for handoff document topics** (`.md` files only). Code files (`.py`, `.js`, `.ts`, etc.) follow their language's native conventions:
+
+- **Python** (`.py`) — `snake_case` per PEP 8 (e.g., `gh_sync.py`, `handoff_validator.py`)
+- **JavaScript/TypeScript** (`.js`, `.ts`) — `camelCase` or `kebab-case` per project style
+- **Shell scripts** (`.sh`) — typically `snake_case` or `kebab-case`
+- **Markdown** (`.md`) — **kebab-case** for handoff docs per this convention
+
+The kebab-case requirement applies to the `<topic>` portion of handoff filenames, not to general-purpose documentation or code files in a repo. For example, a repo's `README.md` or `CONTRIBUTING.md` follows its own conventions; this spec only governs files participating in the handoff lifecycle.
+
 ---
 
 ## REPO_CARD.md (producer capability surface)
