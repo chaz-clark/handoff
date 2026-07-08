@@ -296,12 +296,12 @@ Every handoff doc opens with a bold-labeled metadata header. Bold-labeled (not Y
 
 ### File type conventions
 
-This convention specifies **kebab-case for handoff document topics** (`.md` files only). Code files (`.py`, `.js`, `.ts`, etc.) follow their language's native conventions:
+This convention specifies **kebab-case for handoff document topics** (`.md` files only). Code files follow ecosystem-specific conventions:
 
-- **Python** (`.py`) — `snake_case` per PEP 8 (e.g., `gh_sync.py`, `handoff_validator.py`)
-- **JavaScript/TypeScript** (`.js`, `.ts`) — `camelCase` or `kebab-case` per project style
-- **Shell scripts** (`.sh`) — typically `snake_case` or `kebab-case`
-- **Markdown** (`.md`) — **kebab-case** for handoff docs per this convention
+- Python (`.py`): `snake_case`
+- Markdown (`.md`): `kebab-case`
+- Rust (`.rs`): `snake_case`
+- Special files: `UPPERCASE`
 
 The kebab-case requirement applies to the `<topic>` portion of handoff filenames, not to general-purpose documentation or code files in a repo. For example, a repo's `README.md` or `CONTRIBUTING.md` follows its own conventions; this spec only governs files participating in the handoff lifecycle.
 
