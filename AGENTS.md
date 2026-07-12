@@ -49,6 +49,51 @@ This project follows the behavioral discipline defined in `Make-AI-Agents/knowle
   - **Decision heuristic**: if the producer's maintainer can act on it knowing only the producer's own state, it's an Issue. If they need the consumer's design context to act on it correctly, it's a handoff. Bug reports and contract violations are almost always Issues; "I need this field added to your schema because of how my repo uses it" is almost always a handoff.
   - Working examples (this repo): the `make_AGENTS` ↔ `make_AGENTS_qc` Rule 6 contract drift was a public bug → filed as [Make-AI-Agents#9](https://github.com/chaz-clark/Make-AI-Agents/issues/9). The `AGENTJ_HANDOFF_folder_io_update.md` cross-repo design coordination is the canonical handoff example, to land in `examples/`.
 
+## Toyota Quality Loop
+
+Every task must complete the quality loop: **Prevent → Detect → Verify**.
+
+### 1. Genchi Gembutsu (現地現物) - Go and See
+
+**Don't assume, verify with real data:**
+- Test with REAL user data, not synthetic fixtures
+- When uncertain about format, examine actual files
+- Verify in real environment, don't trust docs alone
+- Read actual code before claiming understanding
+
+**Behavioral trigger**: When you say "probably" or "should" → STOP and verify
+
+### 2. Jidoka (自働化) - Built-in Quality / Stop on Defect
+
+**Build quality in, stop when defect detected:**
+- Write tests WITH code, not after
+- Red tests block progress - fix immediately, don't defer
+- Validation runs automatically (not manual step)
+- Can't merge/export with errors (blocked by design)
+
+**Behavioral trigger**: When you want to say "we'll fix this later" → STOP and fix now
+
+**Aligns with**: P-003 Stop on Defect
+
+### 3. Poka-yoke (ポカヨケ) - Mistake-Proofing
+
+**Design so mistakes can't happen:**
+- Automate validation (no manual steps)
+- Use pre-commit hooks to catch errors
+- Type hints catch errors at write-time
+- Block operations that would create defects
+
+**Behavioral trigger**: When manual verification required → Design it out
+
+---
+
+**The Quality Loop in action:**
+
+When you find a defect:
+1. **Fix it** (Jidoka - stop and correct)
+2. **Verify the fix** (Genchi Gembutsu - test with real data)
+3. **Prevent recurrence** (Poka-yoke - add automated check)
+
 ## Active Context
 
 _Last updated: 2026-05-22_
