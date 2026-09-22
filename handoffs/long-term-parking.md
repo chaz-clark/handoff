@@ -4,9 +4,22 @@
 **Direction:** internal
 **Status:** parked
 **Purpose:** Far-horizon parked ideas for the `handoff` repo — versions-ahead, evidence-gated, someday-maybe, pie-in-the-sky. Each item is gated by external conditions (a use case, adoption evidence, an upstream change), not by current capacity. NOT a roadmap and NOT next-work. See `CONVENTION.md` → Internal handoffs. Reviewed occasionally for "has the evidence arrived yet?"
-**Last-refined:** 2026-05-28
+**Last-refined:** 2026-09-22
 
 ---
+
+### File-based handoffs as a potential deprecation candidate, once cross-tool live agent messaging is common
+
+**Trigger:** when a second widely-used agentic coding tool (Codex named specifically — Claude Code already has this) ships cross-session / cross-window agent discovery and direct messaging as a stable, ordinary capability, not an experimental one. Not yet — this is a "the runway is short" flag, not a design proposal.
+**Routes-to:** convention update *or* decline
+**Added:** 2026-09-22
+**Origin-Commit:** 211ae07
+
+The whole reason `handoff` exists is that agents in different sessions/repos couldn't talk to each other directly — a file with a lifecycle (`Status: draft/delivered/applied/...`) was the only channel. Claude Code has since shipped exactly the capability that premise assumed away: a running session can list other live sessions (same machine, other machines via Remote Control, cloud) and message them directly, with delivery semantics, idle notifications, and cross-session reply threading. Demonstrated repeatedly in a real canvas-toolbox session (2026-09-22): coordinating a live Cloudflare Worker deploy with a peer session that could reach an interactive terminal this session couldn't, checking in with another session before touching its uncommitted work rather than guessing, and answering a cross-session question about a shipped feature — all without a single handoff file.
+
+This doesn't obsolete the convention today — most of chaz-clark's fleet isn't Claude Code, and even within Claude Code, live messaging only works when the target session is actually running; a handoff file is durable across sessions being closed, which live messaging is not. But the *asynchronous, session-may-not-exist-yet* case is shrinking as more of the fleet runs concurrently, and Codex (and presumably others) copying this capability is a matter of when, not if — once it does, "no direct channel exists" stops being true industry-wide, and the convention's founding premise is gone for good, not just for one tool.
+
+**What would actually trigger action, not just watching:** live messaging becoming the DEFAULT path for same-machine, same-session-window coordination, with file-based handoffs narrowing to their genuinely durable niche — cross-repo state that must survive both sessions being closed, or reach a tool that never gained live messaging. That's a real, smaller scope for the convention, not full deprecation. No action until then; this entry exists so the question gets asked with real evidence in hand instead of being rediscovered from scratch.
 
 ### `scripts/bootstrap_tooling.sh` installer
 
